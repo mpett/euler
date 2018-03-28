@@ -6,7 +6,7 @@ public class Multiple {
     public static void main(String[] args) {
         System.out.println(multiples());
         System.out.println(evenFibSum());
-        //System.out.println(pollardRho(13195));
+        System.out.println(pollardRho(13195));
         ArrayList<Integer> r = trialDivision(324324);
         for (int e : r)
             System.out.print(e + " ");
@@ -82,8 +82,10 @@ public class Multiple {
         return a;
     }
 
-    private static ArrayList<Integer> trialDivision(int n) {
-        ArrayList<Integer> a = new ArrayList<>();
+    private static ArrayList<Integer>
+                trialDivision(int n) {
+        ArrayList<Integer> a
+                = new ArrayList<>();
         int f = 2;
         while (n > 1) {
             if (n % f == 0) {
@@ -110,7 +112,6 @@ public class Multiple {
             x = g(x, n);
             y = g(g(y,n),n);
             d = gcd(Math.abs(x-y), n);
-            System.err.println(x + " " + y);
         }
         if (d == n) {
             return -1;
@@ -146,25 +147,22 @@ public class Multiple {
 
     private static int multiples() {
         int sum = 0;
-        for(int realNumber = 1; realNumber < 1000; realNumber++) {
-            if (realNumber % 3 == 0 || realNumber % 5 == 0)
+        for(int realNumber = 1; realNumber < 1000;
+                                    realNumber++) {
+            if (realNumber % 3 == 0
+                    || realNumber % 5 == 0)
                 sum += realNumber;
         }
         return sum;
     }
 
     private static int fib(int n) {
-        /* Declare an array to store Fibonacci numbers. */
         int f[] = new int[n+1];
         int i;
-
-        /* 0th and 1st number of the series are 0 and 1*/
         f[0] = 0;
         f[1] = 1;
 
         for (i = 2; i <= n; i++) {
-       /* Add the previous 2 numbers in the series
-         and store it */
             f[i] = f[i-1] + f[i-2];
         }
 

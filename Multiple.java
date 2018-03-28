@@ -1,5 +1,6 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Multiple {
     public static void main(String[] args) {
@@ -18,6 +19,20 @@ public class Multiple {
         System.out.println(isPalindrome(9009));
         System.out.println(isPalindrome(9019));
         System.out.println(largePalindromeProduct());
+        System.out.println(largestPalindromeProduct());
+    }
+
+    private static int largestPalindromeProduct() {
+        ArrayList<Integer> palindromes
+                = new ArrayList<>();
+        for (int a = 999; a >= 900; a--) {
+            for (int b = 999; b >= 900; b--) {
+                int n = a * b;
+                if (isPalindrome(n))
+                    palindromes.add(n);
+            }
+        }
+        return Collections.max(palindromes);
     }
 
     private static int largePalindromeProduct() {

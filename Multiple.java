@@ -20,6 +20,22 @@ public class Multiple {
         System.out.println(isPalindrome(9019));
         System.out.println(largePalindromeProduct());
         System.out.println(largestPalindromeProduct());
+        System.out.println(smallestMultiple());
+    }
+
+    private static int smallestMultiple() {
+        boolean smallestMultipleFound = false;
+        int n = 0;
+        while (!smallestMultipleFound) {
+            n++;
+            for (int i = 1; i <= 20; i++) {
+                if (n % i != 0)
+                    break;
+                if (i == 20)
+                    smallestMultipleFound = true;
+            }
+        }
+        return n;
     }
 
     private static int largestPalindromeProduct() {

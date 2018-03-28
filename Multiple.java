@@ -15,6 +15,42 @@ public class Multiple {
         for (BigInteger ex : rx)
             System.out.print(ex.toString() + " ");
         System.out.println();
+        System.out.println(isPalindrome(9009));
+        System.out.println(isPalindrome(9019));
+        System.out.println(largePalindromeProduct());
+    }
+
+    private static int largePalindromeProduct() {
+        int a = 999;
+        int b = 999;
+        int largeThreeDigitProduct = a * b;
+        int n = largeThreeDigitProduct;
+        int c = 2;
+        while (true) {
+            if (isPalindrome(n))
+                System.out.println
+                        (a + " * " + b
+                                + " = " + n);
+            if (c % 2 == 0)
+                a--;
+            else
+                b--;
+            if (a == 100)
+                break;
+            n = a * b;
+            c++;
+        }
+        return n;
+    }
+
+    private static boolean isPalindrome(int n) {
+        String numberString = n + "";
+        String reversed = new StringBuilder(
+                numberString).reverse().toString();
+        if (numberString.equals(reversed))
+            return true;
+        else
+            return false;
     }
 
     private static ArrayList<BigInteger> trialDivision(BigInteger n) {

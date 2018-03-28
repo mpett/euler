@@ -8,6 +8,7 @@ public class Multiple {
         System.out.println(evenFibSum());
         System.out.println(pollardRho(13195));
         ArrayList<Integer> r = trialDivision(324324);
+
         for (int e : r)
             System.out.print(e + " ");
         System.out.println();
@@ -15,23 +16,25 @@ public class Multiple {
                 trialDivision(new BigInteger("600851475143"));
         for (BigInteger ex : rx)
             System.out.print(ex.toString() + " ");
+
         System.out.println();
         System.out.println(isPalindrome(9009));
         System.out.println(isPalindrome(9019));
         System.out.println(largePalindromeProduct());
         System.out.println(largestPalindromeProduct());
-        System.out.println(smallestMultiple());
+        System.out.println(smallestMultiple(10));
+        System.out.println(smallestMultiple(20));
     }
 
-    private static int smallestMultiple() {
+    private static int smallestMultiple(int largestFactor) {
         boolean smallestMultipleFound = false;
         int n = 0;
         while (!smallestMultipleFound) {
-            n++;
-            for (int i = 1; i <= 20; i++) {
+            n+=largestFactor;
+            for (int i = 1; i <= largestFactor; i++) {
                 if (n % i != 0)
                     break;
-                if (i == 20)
+                if (i == largestFactor)
                     smallestMultipleFound = true;
             }
         }

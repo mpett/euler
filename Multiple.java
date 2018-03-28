@@ -24,6 +24,19 @@ public class Multiple {
         System.out.println(largestPalindromeProduct());
         System.out.println(smallestMultiple(10));
         System.out.println(smallestMultiple(20));
+        System.out.println(sumSquareDifference(10));
+    }
+
+    private static int sumSquareDifference(int n) {
+        int sumOfSquares = 0;
+        int naturalSum = 0;
+        for (int i = 1; i <= n; i++) {
+            sumOfSquares += (i * i);
+            naturalSum += i;
+        }
+        int squareOfSum = naturalSum * naturalSum;
+        int sumSquareDifference = squareOfSum - sumOfSquares;
+        return sumSquareDifference;
     }
 
     private static int smallestMultiple(int largestFactor) {

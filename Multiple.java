@@ -33,11 +33,16 @@ public class Multiple {
         System.out.println(sumSquareDifference(100));
         System.out.println();
 
-        ArrayList<Integer> ry = sieveOfErathostenes(10000);
+        ArrayList<Integer> ry = sieveOfErathostenes(200000);
 
         for (int e : ry)
             System.out.print(e + " ");
         System.out.println();
+
+        System.out.println();
+        System.out.println(ry.size());
+
+        System.out.println(ry.get(10000));
     }
 
     private static ArrayList<Integer> sieveOfErathostenes(int n) {

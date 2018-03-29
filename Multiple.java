@@ -7,13 +7,17 @@ public class Multiple {
         System.out.println(multiples());
         System.out.println(evenFibSum());
         System.out.println(pollardRho(13195));
+
         ArrayList<Integer> r = trialDivision(324324);
 
         for (int e : r)
             System.out.print(e + " ");
         System.out.println();
+
         ArrayList<BigInteger> rx =
-                trialDivision(new BigInteger("600851475143"));
+                trialDivision(
+                        new BigInteger("600851475143"));
+
         for (BigInteger ex : rx)
             System.out.print(ex.toString() + " ");
 
@@ -22,9 +26,43 @@ public class Multiple {
         System.out.println(isPalindrome(9019));
         System.out.println(largePalindromeProduct());
         System.out.println(largestPalindromeProduct());
+
         System.out.println(smallestMultiple(10));
         System.out.println(smallestMultiple(20));
         System.out.println(sumSquareDifference(10));
+        System.out.println(sumSquareDifference(100));
+        System.out.println();
+
+        ArrayList<Integer> ry = sieveOfErathostenes(10000);
+
+        for (int e : ry)
+            System.out.print(e + " ");
+        System.out.println();
+    }
+
+    private static ArrayList<Integer> sieveOfErathostenes(int n) {
+        boolean[] A = new boolean[n];
+        for (int i = 0; i < n; i++)
+            A[i] = true;
+
+        int nSqrt = (int) Math.sqrt((double) n);
+
+        // Maybe <= here
+        for (int i = 2; i < nSqrt; i++) {
+            if (A[i]) {
+                for (int j = (i*i); j < n; j+=i)
+                    A[j] = false;
+            }
+        }
+
+        ArrayList<Integer> results = new ArrayList<>();
+
+        for (int i = 2; i < n; i++) {
+            if (A[i])
+                results.add(i);
+        }
+
+        return results;
     }
 
     private static int sumSquareDifference(int n) {
@@ -42,6 +80,7 @@ public class Multiple {
     private static int smallestMultiple(int largestFactor) {
         boolean smallestMultipleFound = false;
         int n = 0;
+
         while (!smallestMultipleFound) {
             n+=largestFactor;
             for (int i = 1; i <= largestFactor; i++) {
@@ -57,6 +96,7 @@ public class Multiple {
     private static int largestPalindromeProduct() {
         ArrayList<Integer> palindromes
                 = new ArrayList<>();
+
         for (int a = 999; a >= 900; a--) {
             for (int b = 999; b >= 900; b--) {
                 int n = a * b;
@@ -73,6 +113,7 @@ public class Multiple {
         int largeThreeDigitProduct = a * b;
         int n = largeThreeDigitProduct;
         int c = 2;
+
         while (true) {
             if (isPalindrome(n))
                 System.out.println
@@ -103,6 +144,7 @@ public class Multiple {
     private static ArrayList<BigInteger> trialDivision(BigInteger n) {
         ArrayList<BigInteger> a = new ArrayList<>();
         BigInteger f = new BigInteger("2");
+
         while (n.compareTo(BigInteger.ONE) == 1) {
             if (n.mod(f) == BigInteger.ZERO) {
                 a.add(f);
@@ -119,6 +161,7 @@ public class Multiple {
         ArrayList<Integer> a
                 = new ArrayList<>();
         int f = 2;
+
         while (n > 1) {
             if (n % f == 0) {
                 a.add(f);
@@ -140,11 +183,13 @@ public class Multiple {
         int x = 2;
         int y = 2;
         int d = 1;
+
         while (d == 1) {
             x = g(x, n);
             y = g(g(y,n),n);
             d = gcd(Math.abs(x-y), n);
         }
+
         if (d == n) {
             return -1;
         } else
@@ -164,6 +209,7 @@ public class Multiple {
     private static int evenFibSum() {
         int n = 2;
         int sumOfEvenFibNumbers = 0;
+
         while (true) {
             int fibNumber = fib(n);
             if (fibNumber >= 4000000)
@@ -179,6 +225,7 @@ public class Multiple {
 
     private static int multiples() {
         int sum = 0;
+
         for(int realNumber = 1; realNumber < 1000;
                                     realNumber++) {
             if (realNumber % 3 == 0

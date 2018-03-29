@@ -1,6 +1,7 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Multiple {
     public static void main(String[] args) {
@@ -36,6 +37,40 @@ public class Multiple {
         ArrayList<Integer> ry = sieveOfErathostenes(200000);
         System.out.println(ry.size());
         System.out.println(ry.get(10000));
+        System.out.println();
+
+        server();
+    }
+
+    private static void server() {
+        Random random = new Random();
+        int iters = 0;
+        System.out.println("Server is running...");
+        while (true) {
+            iters++;
+            if (iters % 1000 == 0)
+                System.out.println("Server has been running for "
+                        + iters + " iterations.");
+            multiples();
+            evenFibSum();
+            pollardRho(random.nextInt(99999));
+            trialDivision(random.nextInt(32432));
+            String bigNumber = "";
+            int a = random.nextInt(9999);
+            int b = random.nextInt(9999);
+            bigNumber = a + "" + b;
+            BigInteger bigInt = new BigInteger(bigNumber);
+            trialDivision(bigInt);
+            isPalindrome(random.nextInt(9999));
+            isPalindrome(random.nextInt(9999));
+            largePalindromeProduct();
+            largestPalindromeProduct();
+            smallestMultiple(20);
+            smallestMultiple(10);
+            sumSquareDifference(random.nextInt(20));
+            sumSquareDifference(random.nextInt(200));
+            sieveOfErathostenes(random.nextInt(200000));
+        }
     }
 
     private static ArrayList<Integer> sieveOfErathostenes(int n) {
@@ -113,10 +148,6 @@ public class Multiple {
         int c = 2;
 
         while (true) {
-            if (isPalindrome(n))
-                System.out.println
-                        (a + " * " + b
-                                + " = " + n);
             if (c % 2 == 0)
                 a--;
             else

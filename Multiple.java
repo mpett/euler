@@ -34,14 +34,7 @@ public class Multiple {
         System.out.println();
 
         ArrayList<Integer> ry = sieveOfErathostenes(200000);
-
-        for (int e : ry)
-            System.out.print(e + " ");
-        System.out.println();
-
-        System.out.println();
         System.out.println(ry.size());
-
         System.out.println(ry.get(10000));
     }
 

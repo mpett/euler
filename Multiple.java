@@ -46,38 +46,74 @@ public class Multiple {
 
         System.out.println(summationOfPrimes());
 
-        //server();
+        try {
+            System.out.println(gridProduct());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void server() {
-        Random random = new Random();
-        int iters = 0;
-        System.out.println("Server is running...");
-        while (true) {
-            iters++;
-            if (iters % 10 == 0)
-                System.out.println("Server has been running for "
-                        + iters + " iterations.");
-            multiples();
-            evenFibSum();
-            pollardRho(random.nextInt(99999));
-            trialDivision(random.nextInt(32432));
-            String bigNumber = "";
-            int a = random.nextInt(9999);
-            int b = random.nextInt(9999);
-            bigNumber = a + "" + b;
-            BigInteger bigInt = new BigInteger(bigNumber);
-            trialDivision(bigInt);
-            isPalindrome(random.nextInt(9999));
-            isPalindrome(random.nextInt(9999));
-            largePalindromeProduct();
-            largestPalindromeProduct();
-            smallestMultiple(20);
-            smallestMultiple(10);
-            sumSquareDifference(random.nextInt(20));
-            sumSquareDifference(random.nextInt(200));
-            sieveOfErathostenes(random.nextInt(200000));
+    private static int gridProduct() throws IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+        int[][] inputMatrix = new int[20][20];
+
+        for (int i = 0; i < 20; i++) {
+            String input = reader.readLine();
+            String[] numbers = input.split(" ");
+            for (int j = 0; j < numbers.length; j++) {
+                inputMatrix[i][j] =
+                        Integer.parseInt(numbers[j]);
+            }
         }
+
+        ArrayList<Integer> adjacentProducts
+                = new ArrayList<>();
+
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                // Check up
+                if ((i-3) >= 0)
+                    adjacentProducts.add(inputMatrix[i][j]
+                            * inputMatrix[i-1][j]
+                            * inputMatrix[i-2][j]
+                            * inputMatrix[i-3][j]);
+                // Check down
+                if ((i+3) < 20)
+                    adjacentProducts.add(inputMatrix[i][j]
+                            * inputMatrix[i+1][j]
+                            * inputMatrix[i+2][j]
+                            * inputMatrix[i+3][j]);
+                // Check left
+                if ((j-3) >= 0)
+                    adjacentProducts.add(inputMatrix[i][j]
+                            * inputMatrix[i][j-1]
+                            * inputMatrix[i][j-2]
+                            * inputMatrix[i][j-3]);
+                // Check right
+                if ((j+3) < 20)
+                    adjacentProducts.add(inputMatrix[i][j]
+                            * inputMatrix[i][j+1]
+                            * inputMatrix[i][j+2]
+                            * inputMatrix[i][j+3]);
+                // Check right diagonal
+                if ((i+3) < 20 && (j+3) < 20)
+                    adjacentProducts.add(inputMatrix[i][j]
+                            * inputMatrix[i+1][j+1]
+                            * inputMatrix[i+2][j+2]
+                            * inputMatrix[i+3][j+3]);
+                // Check left diagonal
+                if ((i+3) < 20 && (j-3) >= 0)
+                    adjacentProducts.add(inputMatrix[i][j]
+                            * inputMatrix[i+1][j-1]
+                            * inputMatrix[i+2][j-2]
+                            * inputMatrix[i+3][j-3]);
+            }
+        }
+
+        reader.close();
+
+        return Collections.max(adjacentProducts);
     }
 
     private static long summationOfPrimes() {

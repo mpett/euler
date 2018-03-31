@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +42,17 @@ public class Multiple {
         System.out.println(ry.get(10000));
         System.out.println();
 
-        server();
+        long d = 0;
+
+        try {
+            d = largestProduct();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(d);
+
+        //server();
     }
 
     private static void server() {
@@ -48,7 +61,7 @@ public class Multiple {
         System.out.println("Server is running...");
         while (true) {
             iters++;
-            if (iters % 1000 == 0)
+            if (iters % 10 == 0)
                 System.out.println("Server has been running for "
                         + iters + " iterations.");
             multiples();
@@ -71,6 +84,49 @@ public class Multiple {
             sumSquareDifference(random.nextInt(200));
             sieveOfErathostenes(random.nextInt(200000));
         }
+    }
+
+    private static long largestProduct() throws IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        int consLength = 13;
+
+        ArrayList<Long> consecutiveNumbers
+                    = new ArrayList<>();
+
+        String inputNumber = "";
+
+        for (int i = 0; i < 20; i++) {
+            String inputString = reader.readLine();
+            inputNumber += inputString;
+        }
+
+        System.out.println();
+
+        for (int i = 0; i < inputNumber.length()
+                            - consLength + 1; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < consLength; j++) {
+                sb.append(inputNumber.charAt(i+j));
+            }
+
+            String substring = sb.toString();
+            System.out.println(substring + " = "
+                    + digitProduct(substring));
+            consecutiveNumbers.add(digitProduct(substring));
+        }
+
+        return Collections.max(consecutiveNumbers);
+    }
+
+    private static long digitProduct(String s) {
+        long product = 1;
+        for (int i = 0; i < s.length(); i++) {
+            long n = Integer.parseInt(s.charAt(i) + "");
+            product *= n;
+        }
+        return product;
     }
 
     private static ArrayList<Integer> sieveOfErathostenes(int n) {

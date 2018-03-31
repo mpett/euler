@@ -44,6 +44,8 @@ public class Multiple {
 
         System.out.println(pythagoreanTriplet());
 
+        System.out.println(summationOfPrimes());
+
         //server();
     }
 
@@ -76,6 +78,17 @@ public class Multiple {
             sumSquareDifference(random.nextInt(200));
             sieveOfErathostenes(random.nextInt(200000));
         }
+    }
+
+    private static long summationOfPrimes() {
+        ArrayList<Integer> primes
+                = sieveOfErathostenes(2000000);
+        long sum = 0;
+        for (int element : primes) {
+            sum += element;
+        }
+
+        return sum;
     }
 
     private static int pythagoreanTriplet() {

@@ -42,15 +42,7 @@ public class Multiple {
         System.out.println(ry.get(10000));
         System.out.println();
 
-        long d = 0;
-
-        try {
-            d = largestProduct();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(d);
+        System.out.println(pythagoreanTriplet());
 
         //server();
     }
@@ -84,6 +76,20 @@ public class Multiple {
             sumSquareDifference(random.nextInt(200));
             sieveOfErathostenes(random.nextInt(200000));
         }
+    }
+
+    private static int pythagoreanTriplet() {
+        for (int a = 1; a <= 1000; a++) {
+            for (int b = 1; b <= 1000; b++) {
+                for (int c = 1; c <= 1000; c++) {
+                    if ((a+b+c) == 1000
+                            && ((a*a) + (b*b)) == (c*c)) {
+                        return a*b*c;
+                    }
+                }
+            }
+        }
+        return -1;
     }
 
     private static long largestProduct() throws IOException {

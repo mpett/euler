@@ -56,12 +56,32 @@ public class Multiple {
         //System.out.println(firstTriangNumberWithFactors(500));
         System.out.println(fasterFirstTriangNumber(500));
 
-        try {
-            largeSum();
-        } catch (IOException e) {
-            e.printStackTrace();
+        int[] q = collatzSequence(13);
+
+        for (int e : q)
+            System.out.print(e + " -> ");
+        System.out.println();
+
+    }
+
+    private static int[] collatzSequence(int n) {
+        ArrayList<Integer> sequence = new ArrayList<>();
+        sequence.add(n);
+
+        while (true) {
+            if (n == 1)
+                break;
+            if (n % 2 == 0)
+                n /= 2;
+            else
+                n = 3*n + 1;
+            sequence.add(n);
         }
 
+        int[] collatzSequence = new int[sequence.size()];
+        for (int i = 0; i < collatzSequence.length; i++)
+            collatzSequence[i] = sequence.get(i);
+        return collatzSequence;
     }
 
     private static void largeSum() throws IOException {

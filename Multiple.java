@@ -48,25 +48,60 @@ public class Multiple {
 
         System.out.println(summationOfPrimes());
 
-        int[] f = factors(28);
-        for (int e : f)
+        long[] f = factors(28);
+        for (long e : f)
             System.out.print(e + " ");
         System.out.println();
 
         //System.out.println(firstTriangNumberWithFactors(500));
+        System.out.println(fasterFirstTriangNumber(500));
+
     }
 
-    private static int firstTriangNumberWithFactors(int numberOfFactors) {
-        int n = 1;
-        int maxFactor = 0;
-        while (true) {
-            int triangularNumber = generateTriangularNumber(n);
-            int factors = factors(triangularNumber).length;
-            if (factors > maxFactor) {
-                maxFactor = factors;
-                System.out.println(maxFactor);
-            }
+    private static int fasterFirstTriangNumber(int numberOfFactors) {
+        int t = 1;
+        int a = 1;
+        int cnt = 0;
+        int tt; int i;
+        int exponent;
 
+        ArrayList<Integer> primes = sieveOfErathostenes(2000);
+        int[] primeArray = new int[primes.size()];
+
+        for (int j = 0; j < primeArray.length; j++)
+            primeArray[j] = primes.get(j);
+
+        while (cnt <= numberOfFactors) {
+            cnt = 1;
+            a++;
+            t += a;
+            tt = t;
+            for (i = 0; i < primeArray.length; i++) {
+                if (primeArray[i]*primeArray[i] > tt) {
+                    cnt = 2 * cnt;
+                    break;
+                }
+                exponent = 1;
+                while (tt % primeArray[i] == 0) {
+                    exponent++;
+                    tt /= primeArray[i];
+                }
+                if (exponent > 1)
+                    cnt *= exponent;
+                if (tt == 1)
+                    break;
+            }
+        }
+
+        return t;
+    }
+
+    private static long firstTriangNumberWithFactors(int numberOfFactors) {
+        int n = 1;
+        long maxFactor = 0;
+        while (true) {
+            long triangularNumber = generateTriangularNumber(n);
+            int factors = factors(triangularNumber).length;
             if (factors >= numberOfFactors)
                 break;
             n++;
@@ -74,24 +109,24 @@ public class Multiple {
         return generateTriangularNumber(n);
     }
 
-    private static int generateTriangularNumber(int index) {
-        int triangularNumber = 0;
+    private static long generateTriangularNumber(int index) {
+        long triangularNumber = 0;
         for (int p = 1; p <= index; p++)
             triangularNumber += p;
         return triangularNumber;
     }
 
-    private static int[] factors(int n) {
-        ArrayList<Integer> factors = new ArrayList<>();
-        int squareRoot = (int) Math.sqrt((double) n) + 1;
-        for (int i = 1; i < squareRoot; i++) {
-            if (n % i == 0 && (i*i) != n)
+    private static long[] factors(long n) {
+        ArrayList<Long> factors = new ArrayList<>();
+        for (long i = 1; i <= (n/2); i++) {
+            if (n % i == 0)
                 factors.add(i);
         }
-        int[] f = new int[factors.size()];
-        for (int i = 0; i < f.length; i++) {
+        long[] f = new long[factors.size() + 1];
+        for (int i = 0; i < factors.size(); i++) {
             f[i] = factors.get(i);
         }
+        f[f.length - 1] = n;
         return f;
     }
 

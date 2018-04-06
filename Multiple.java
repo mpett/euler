@@ -56,16 +56,39 @@ public class Multiple {
         //System.out.println(firstTriangNumberWithFactors(500));
         System.out.println(fasterFirstTriangNumber(500));
 
-        int[] q = collatzSequence(13);
+        long[] q = collatzSequence(13);
 
-        for (int e : q)
-            System.out.print(e + " -> ");
+        for (long e : q) {
+            if (e != q[q.length - 1])
+                System.out.print(e + " -> ");
+            else
+                System.out.print(e);
+        }
+
         System.out.println();
+        System.out.println(longestCollatzSequence());
 
     }
 
-    private static int[] collatzSequence(int n) {
-        ArrayList<Integer> sequence = new ArrayList<>();
+    private static long longestCollatzSequence() {
+        long maxSequence = 0;
+        long n = 999999;
+        long biggestStartingNumber = 0;
+        while (n > 1) {
+            long sequenceLength
+                    = collatzSequence(n).length;
+            if (sequenceLength > maxSequence) {
+                maxSequence = sequenceLength;
+                biggestStartingNumber = n;
+            }
+
+            n--;
+        }
+        return biggestStartingNumber;
+    }
+
+    private static long[] collatzSequence(long n) {
+        ArrayList<Long> sequence = new ArrayList<>();
         sequence.add(n);
 
         while (true) {
@@ -78,7 +101,7 @@ public class Multiple {
             sequence.add(n);
         }
 
-        int[] collatzSequence = new int[sequence.size()];
+        long[] collatzSequence = new long[sequence.size()];
         for (int i = 0; i < collatzSequence.length; i++)
             collatzSequence[i] = sequence.get(i);
         return collatzSequence;

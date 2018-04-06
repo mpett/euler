@@ -56,6 +56,28 @@ public class Multiple {
         //System.out.println(firstTriangNumberWithFactors(500));
         System.out.println(fasterFirstTriangNumber(500));
 
+        try {
+            largeSum();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void largeSum() throws IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+        BigInteger sum = BigInteger.ZERO;
+        for (int i = 0; i < 100; i++) {
+            String input = reader.readLine();
+            BigInteger inputNumber = new BigInteger(input);
+            sum = sum.add(inputNumber);
+        }
+        String sumString = sum.toString();
+        String result = "";
+        for (int i = 0; i < 10; i++)
+            result += sumString.charAt(i);
+        System.out.println(result);
     }
 
     private static int fasterFirstTriangNumber(int numberOfFactors) {

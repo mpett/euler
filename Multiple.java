@@ -14,6 +14,8 @@ public class Multiple {
 
         ArrayList<Integer> r = trialDivision(324324);
 
+        String a_b;
+
         for (int e : r)
             System.out.print(e + " ");
         System.out.println();
@@ -46,17 +48,60 @@ public class Multiple {
 
         System.out.println(summationOfPrimes());
 
-        try {
-            System.out.println(gridProduct());
-        } catch (IOException e) {
-            e.printStackTrace();
+        int[] f = factors(28);
+        for (int e : f)
+            System.out.print(e + " ");
+        System.out.println();
+
+        //System.out.println(firstTriangNumberWithFactors(500));
+    }
+
+    private static int firstTriangNumberWithFactors(int numberOfFactors) {
+        int n = 1;
+        int maxFactor = 0;
+        while (true) {
+            int triangularNumber = generateTriangularNumber(n);
+            int factors = factors(triangularNumber).length;
+            if (factors > maxFactor) {
+                maxFactor = factors;
+                System.out.println(maxFactor);
+            }
+
+            if (factors >= numberOfFactors)
+                break;
+            n++;
         }
+        return generateTriangularNumber(n);
+    }
+
+    private static int generateTriangularNumber(int index) {
+        int triangularNumber = 0;
+        for (int p = 1; p <= index; p++)
+            triangularNumber += p;
+        return triangularNumber;
+    }
+
+    private static int[] factors(int n) {
+        ArrayList<Integer> factors = new ArrayList<>();
+        int squareRoot = (int) Math.sqrt((double) n) + 1;
+        for (int i = 1; i < squareRoot; i++) {
+            if (n % i == 0 && (i*i) != n)
+                factors.add(i);
+        }
+        int[] f = new int[factors.size()];
+        for (int i = 0; i < f.length; i++) {
+            f[i] = factors.get(i);
+        }
+        return f;
     }
 
     private static int gridProduct() throws IOException {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
         int[][] inputMatrix = new int[20][20];
+
+        int a = 0;
+        int b;
 
         for (int i = 0; i < 20; i++) {
             String input = reader.readLine();

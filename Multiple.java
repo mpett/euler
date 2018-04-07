@@ -2,9 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 public class Multiple {
     public static void main(String[] args) {
@@ -66,14 +64,109 @@ public class Multiple {
         }
 
         System.out.println();
-        System.out.println(longestCollatzSequence());
+        //System.out.println(longestCollatzSequence());
 
         BigInteger number = BigInteger.TWO;
-        number = number.pow(1000);
+        number = number.pow(15);
         System.out.println(number.toString());
         int digitSum = digitSum(number);
         System.out.println(digitSum);
 
+        System.out.println(wordNumberCount(5));
+        System.out.println(wordNumberCount(1000));
+
+    }
+
+    private static int wordNumberCount(int range) {
+        String bigStringOfWordNumbers = "";
+        for (int i = 1; i <= range; i++) {
+            String inputNumber = i + "";
+            if (inputNumber.length() == 1)
+                inputNumber = "000" + inputNumber;
+            if (inputNumber.length() == 2)
+                inputNumber = "00" + inputNumber;
+            if (inputNumber.length() == 3)
+                inputNumber = "0" + inputNumber;
+            try {
+                bigStringOfWordNumbers
+                        += numberToWord(inputNumber) + " ";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        bigStringOfWordNumbers =
+                bigStringOfWordNumbers
+                        .replaceAll("\\s+","");
+
+        return bigStringOfWordNumbers.length();
+    }
+
+    private static String numberToWord(String inputNumber) throws Exception {
+        if (inputNumber.length() != 4) {
+            System.err.println("Input String has to be four characters long.");
+            throw new Exception();
+        }
+
+        String[] numberToWord = new String[1001];
+
+        numberToWord[0] = "zero";
+
+        numberToWord[1] = "one"; numberToWord[2] = "two"; numberToWord[3] = "three";
+        numberToWord[4] = "four"; numberToWord[5] = "five"; numberToWord[6] = "six";
+        numberToWord[7] = "seven"; numberToWord[8] = "eight"; numberToWord[9] = "nine";
+
+        numberToWord[10] = "ten";
+
+        numberToWord[11] = "eleven"; numberToWord[12] = "twelve"; numberToWord[13] = "thirteen";
+        numberToWord[14] = "fourteen"; numberToWord[15] = "fifteen"; numberToWord[16] = "sixteen";
+        numberToWord[17] = "seventeen"; numberToWord[18] = "eighteen"; numberToWord[19] = "nineteen";
+
+        numberToWord[20] = "twenty"; numberToWord[30] = "thirty"; numberToWord[40] = "forty";
+        numberToWord[50] = "fifty"; numberToWord[60] = "sixty"; numberToWord[70] = "seventy";
+        numberToWord[80] = "eighty"; numberToWord[90] = "ninety";
+
+        numberToWord[100] = "hundred"; numberToWord[1000] = "thousand";
+
+        String input = inputNumber;
+        String output = "";
+
+        int firstDigit = Integer.parseInt(input.charAt(0) + "");
+        int secondDigit = Integer.parseInt(input.charAt(1) + "");
+        int thirdDigit = Integer.parseInt(input.charAt(2) + "");
+        int fourthDigit = Integer.parseInt(input.charAt(3) + "");
+
+        if (firstDigit != 0)
+            output += numberToWord[firstDigit] + " " + numberToWord[1000] + " ";
+
+        if (secondDigit != 0)
+            output += numberToWord[secondDigit] + " " + numberToWord[100] + " ";
+        if (secondDigit == 0 && thirdDigit == 0 && fourthDigit != 0)
+            output += numberToWord[fourthDigit];
+        if (thirdDigit == 1 && fourthDigit == 0)
+            output += numberToWord[10];
+
+        else if (thirdDigit == 1
+                && (fourthDigit >= 1 && fourthDigit <= 9)) {
+            String twoFinalDigits = thirdDigit + "" + fourthDigit;
+            int finalDigits = Integer.parseInt(twoFinalDigits);
+            output += numberToWord[finalDigits];
+        } else if ((thirdDigit >= 2 && thirdDigit <= 9)
+                && fourthDigit == 0) {
+            String twoFinalDigits = thirdDigit + "" + fourthDigit;
+            int finalDigits = Integer.parseInt(twoFinalDigits);
+            output += numberToWord[finalDigits];
+        } else if ((thirdDigit >= 2 && thirdDigit <= 9)
+                && (fourthDigit >= 1 && fourthDigit <= 9)) {
+            String twoFinalDigits = thirdDigit + "0";
+            int finalDigits = Integer.parseInt(twoFinalDigits);
+            output += numberToWord[finalDigits];
+            output += " ";
+            output += numberToWord[fourthDigit];
+        } else if (secondDigit != 0 && thirdDigit == 0 && fourthDigit != 0)
+            output += numberToWord[fourthDigit];
+
+        return output;
     }
 
     private static int digitSum(BigInteger input) {

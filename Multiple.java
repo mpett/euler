@@ -68,6 +68,23 @@ public class Multiple {
         System.out.println();
         System.out.println(longestCollatzSequence());
 
+        BigInteger number = BigInteger.TWO;
+        number = number.pow(1000);
+        System.out.println(number.toString());
+        int digitSum = digitSum(number);
+        System.out.println(digitSum);
+
+    }
+
+    private static int digitSum(BigInteger input) {
+        String inputString = input.toString();
+        int sum = 0;
+        for (int i = 0; i < inputString.length(); i++) {
+            int digit = Integer
+                    .parseInt(inputString.charAt(i) + "");
+            sum += digit;
+        }
+        return sum;
     }
 
     private static long longestCollatzSequence() {

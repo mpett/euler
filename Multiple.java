@@ -75,22 +75,46 @@ public class Multiple {
         System.out.println(wordNumberCount(5));
         System.out.println(wordNumberCount(1000));
 
-        try {
-            System.out.println(numberToWord("9000"));
-            System.out.println(numberToWord("9009"));
-            System.out.println(numberToWord("9099"));
-            System.out.println(numberToWord("9999"));
-            System.out.println(numberToWord("1101"));
-            System.out.println(numberToWord("1000"));
-            System.out.println(numberToWord("0011"));
-            System.out.println(numberToWord("0111"));
-            System.out.println(numberToWord("0101"));
-            System.out.println(numberToWord("0313"));
-            System.out.println(numberToWord("3333"));
-            System.out.println(numberToWord("1919"));
-        } catch (Exception e) {
-            e.printStackTrace();
+        System.out.println(numberOfLatticePaths(20));
+    }
+
+    /**
+     * Number of lattice paths from (0,0) to (gridSize, gridSize)
+     * in a quadratic lattice.
+     *
+     * @param gridSize
+     * @return numberOfPaths
+     */
+    private static long numberOfLatticePaths(int gridSize) {
+        int m = 2 * gridSize;
+        int n = gridSize;
+        double k = choose(m, n);
+        long numberOfPaths = (long) k;
+        return numberOfPaths;
+    }
+
+    /**
+     * A simple n choose k implementation.
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    private static double choose(int x, int y) {
+        if (y < 0 || y > x)
+            return 0;
+
+        if (y > x/2)
+            y = x - y;
+
+        double denominator = 1.0, numerator = 1.0;
+
+        for (int i = 1; i <= y; i++) {
+            denominator *= i;
+            numerator *= (x + 1 - i);
         }
+
+        return numerator / denominator;
     }
 
     private static int wordNumberCount(int range) {
@@ -246,7 +270,8 @@ public class Multiple {
         BigInteger sum = BigInteger.ZERO;
         for (int i = 0; i < 100; i++) {
             String input = reader.readLine();
-            BigInteger inputNumber = new BigInteger(input);
+            BigInteger inputNumber
+                    = new BigInteger(input);
             sum = sum.add(inputNumber);
         }
         String sumString = sum.toString();

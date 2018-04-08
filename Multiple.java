@@ -75,6 +75,22 @@ public class Multiple {
         System.out.println(wordNumberCount(5));
         System.out.println(wordNumberCount(1000));
 
+        try {
+            System.out.println(numberToWord("9000"));
+            System.out.println(numberToWord("9009"));
+            System.out.println(numberToWord("9099"));
+            System.out.println(numberToWord("9999"));
+            System.out.println(numberToWord("1101"));
+            System.out.println(numberToWord("1000"));
+            System.out.println(numberToWord("0011"));
+            System.out.println(numberToWord("0111"));
+            System.out.println(numberToWord("0101"));
+            System.out.println(numberToWord("0313"));
+            System.out.println(numberToWord("3333"));
+            System.out.println(numberToWord("1919"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static int wordNumberCount(int range) {
@@ -136,16 +152,23 @@ public class Multiple {
         int thirdDigit = Integer.parseInt(input.charAt(2) + "");
         int fourthDigit = Integer.parseInt(input.charAt(3) + "");
 
-        if (firstDigit != 0)
+        if (firstDigit != 0) {
             output += numberToWord[firstDigit] + " " + numberToWord[1000] + " ";
+            if (secondDigit == 0 && (thirdDigit != 0 || fourthDigit != 0))
+                output += "and ";
+        }
 
-        if (secondDigit != 0)
+        if (secondDigit != 0) {
             output += numberToWord[secondDigit] + " " + numberToWord[100] + " ";
+            if (thirdDigit != 0 || fourthDigit != 0)
+                output += "and ";
+        }
+
         if (secondDigit == 0 && thirdDigit == 0 && fourthDigit != 0)
             output += numberToWord[fourthDigit];
+
         if (thirdDigit == 1 && fourthDigit == 0)
             output += numberToWord[10];
-
         else if (thirdDigit == 1
                 && (fourthDigit >= 1 && fourthDigit <= 9)) {
             String twoFinalDigits = thirdDigit + "" + fourthDigit;

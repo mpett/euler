@@ -76,6 +76,63 @@ public class Multiple {
         System.out.println(wordNumberCount(1000));
 
         System.out.println(numberOfLatticePaths(20));
+
+        try {
+            maximumPathSum();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void maximumPathSum() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> inputs = new ArrayList<>();
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equals(""))
+                break;
+            inputs.add(input);
+        }
+
+        String lastRow = inputs.get(inputs.size() -1);
+        String[] lastRowSplit = lastRow.split(" ");
+        int arraySize = lastRowSplit.length;
+
+        int[][] triangleMatrix = new int[inputs.size()][arraySize];
+
+        for (int i = 0; i < inputs.size(); i++) {
+            String[] split = inputs.get(i).split(" ");
+            for (int j = 0; j < split.length; j++) {
+                triangleMatrix[i][j] = Integer.parseInt(split[j]);
+            }
+        }
+
+        System.out.println();
+
+
+        int previousSum = 0;
+
+        Random r = new Random();
+        int randomNumber = r.nextInt(100);
+
+        while (true) {
+            int k = 0;
+            int sum = triangleMatrix[0][0];
+            for (int i = 0; i < triangleMatrix.length - 1; i++) {
+                if (r.nextInt(100) % 2 == 0)
+                    sum += triangleMatrix[i+1][k];
+                else {
+                    sum += triangleMatrix[i+1][k+1];
+                    k++;
+                }
+            }
+
+            if (sum > previousSum) {
+                System.out.println(sum);
+                previousSum = sum;
+            }
+        }
     }
 
     /**

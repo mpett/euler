@@ -77,17 +77,25 @@ public class Multiple {
 
         System.out.println(numberOfLatticePaths(20));
 
-        try {
-            maximumPathSum();
-        } catch (IOException e) {
-            e.printStackTrace();
+        System.out.println(digitSum(factorial(10)));
+        System.out.println(digitSum(factorial(100)));
+    }
+
+    private static BigInteger factorial(int factorialOf) {
+        BigInteger factorial = BigInteger.ONE;
+
+        for (int i = 1; i <= factorialOf; i++) {
+            BigInteger index = new BigInteger(i + "");
+            factorial = factorial.multiply(index);
         }
 
+        return factorial;
     }
 
     private static void maximumPathSum() throws IOException {
         Scanner scanner = new Scanner(System.in);
         ArrayList<String> inputs = new ArrayList<>();
+
         while (true) {
             String input = scanner.nextLine();
             if (input.equals(""))
@@ -107,9 +115,6 @@ public class Multiple {
                 triangleMatrix[i][j] = Integer.parseInt(split[j]);
             }
         }
-
-        System.out.println();
-
 
         int previousSum = 0;
 

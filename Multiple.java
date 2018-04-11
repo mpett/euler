@@ -79,6 +79,40 @@ public class Multiple {
 
         System.out.println(digitSum(factorial(10)));
         System.out.println(digitSum(factorial(100)));
+
+        System.out.println(d(220));
+        System.out.println(d(284));
+
+        System.out.println(sumOfAmicableNumbers(10000));
+    }
+
+    private static long sumOfAmicableNumbers(int limit) {
+        ArrayList<Long> amicableNumbers = new ArrayList<>();
+
+        for (int i = 1; i < limit; i++) {
+            long a = (long) i;
+            long b = d(a);
+            if (d(b) == a && a != b) {
+                if (!amicableNumbers.contains(a))
+                    amicableNumbers.add(a);
+                if (!amicableNumbers.contains(b))
+                    amicableNumbers.add(b);
+            }
+        }
+
+        long sum = 0;
+        for (long e : amicableNumbers)
+            sum += e;
+
+        return sum;
+    }
+
+    private static long d(long n) {
+        long[] divisors = factors(n);
+        long sum = 0;
+        for (int i = 0; i < divisors.length - 1; i++)
+            sum += divisors[i];
+        return sum;
     }
 
     private static BigInteger factorial(int factorialOf) {

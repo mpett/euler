@@ -91,6 +91,69 @@ public class Multiple {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println(sumOfProperDivisors(28));
+    }
+
+    private static long nonAbundantSum() {
+        long limit = 28123;
+        ArrayList<Long> abundantNumbers
+                = new ArrayList<>();
+        for (long n = 1; n <= limit; n++) {
+            if (n%100 == 0)
+                System.out.println(n);
+            if (isAbundant(n))
+                abundantNumbers.add(n);
+        }
+
+        ArrayList<Long> abundantSums = new ArrayList<>();
+
+        System.out.println("Added abundant numbers");
+
+        for (long a : abundantNumbers) {
+            if (a%100 == 0)
+                System.out.println(a);
+            for (long b : abundantNumbers) {
+                long abundantSum = a + b;
+                abundantSums.add(abundantSum);
+            }
+        }
+
+        System.out.println("Added abundant sums");
+
+        ArrayList<Long> nonAbundantSums
+                = new ArrayList<>();
+
+        for (long n = 1; n <= limit; n++) {
+            if (n%100 == 0)
+                System.out.println(n);
+            if (!abundantSums.contains(n))
+                nonAbundantSums.add(n);
+        }
+
+        System.out.println("Added non-abundant sums");
+
+        long sumOfNonAbundantSums = 0;
+
+        for (long e : nonAbundantSums)
+            sumOfNonAbundantSums += e;
+
+        System.out.println("Summed");
+
+        return sumOfNonAbundantSums;
+    }
+
+    private static boolean isAbundant(long n) {
+        return sumOfProperDivisors(n) > n ? true : false;
+    }
+
+    private static long sumOfProperDivisors(long n) {
+        long[] divisors = factors(n);
+        long sumOfDivisors = 0;
+        divisors[divisors.length - 1] = 0;
+        for (long e : divisors)
+            sumOfDivisors += e;
+        return sumOfDivisors;
     }
 
     private static long namesScores() throws IOException {

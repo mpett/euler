@@ -8,6 +8,7 @@ import java.util.*;
 public class Multiple {
 
     private static ArrayList<String> permutations;
+    private static Map<Integer, BigInteger> memo = new HashMap<>();
 
     public static void main(String[] args) {
         System.out.println(multiples());
@@ -101,6 +102,33 @@ public class Multiple {
         Collections.sort(permutations);
         String millionthPermutation = permutations.get(999999);
         System.out.println(millionthPermutation);
+
+        System.out.println(thousandDigitFibNumber() + 1);
+    }
+
+    private static int thousandDigitFibNumber() {
+        boolean found = false;
+        int n = 0;
+        String result = "";
+        while (!found) {
+            n++;
+            result = bigFib(n).toString();
+            if (result.length() == 1000)
+                found = true;
+        }
+        return n;
+    }
+
+    private static BigInteger bigFib(int n) {
+        if (n == 0 || n == 1)
+            return BigInteger.ONE;
+        if (memo.containsKey(n))
+            return memo.get(n);
+        BigInteger v =
+                bigFib(n - 2)
+                        .add(bigFib(n - 1));
+        memo.put(n, v);
+        return v;
     }
 
     private static void permutation(String str) {

@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
@@ -84,6 +85,64 @@ public class Multiple {
         System.out.println(d(284));
 
         System.out.println(sumOfAmicableNumbers(10000));
+
+        try {
+            System.out.println(namesScores());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static long namesScores() throws IOException {
+        BufferedReader reader =
+                new BufferedReader(
+                        new FileReader("p022_names.txt"));
+        String line = reader.readLine();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while (line != null) {
+            stringBuilder.append(line);
+            line = reader.readLine();
+        }
+
+        String input = stringBuilder.toString();
+        String[] names = input.split("\",\"");
+        String firstElement = names[0];
+        firstElement = firstElement.substring(1);
+        String lastElement = names[names.length - 1];
+        lastElement
+                = lastElement.substring
+                (0,
+                        lastElement.length() - 1);
+        names[names.length - 1] = lastElement;
+        names[0] = firstElement;
+
+        ArrayList<String> arrayOfNames = new ArrayList<>();
+        for (String element : names)
+            arrayOfNames.add(element);
+        Collections.sort(arrayOfNames);
+
+        long sum = 0;
+
+        for (int i = 0; i < arrayOfNames.size(); i++) {
+            int position = i + 1;
+            String name = arrayOfNames.get(i);
+            sum += position * getNameScore(name);
+        }
+
+        return sum;
+    }
+
+    private static int getNameScore(String name) throws IOException {
+        int alphabetDelimiter = 64;
+        int sum = 0;
+        for (int i = 0; i < name.length(); i++) {
+            char letter = name.charAt(i);
+            int asciiValue = (int) letter;
+            int alpabetValue = asciiValue - alphabetDelimiter;
+            sum += alpabetValue;
+        }
+        return sum;
     }
 
     private static long sumOfAmicableNumbers(int limit) {

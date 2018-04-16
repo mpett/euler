@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 
@@ -104,6 +105,52 @@ public class Multiple {
         System.out.println(millionthPermutation);
 
         System.out.println(thousandDigitFibNumber() + 1);
+        System.out.println();
+
+        System.out.println(reciprocalCycles());
+    }
+
+    private static int reciprocalCycles() {
+        BigDecimal bd = new BigDecimal("1");
+        BigDecimal bdd = new BigDecimal("3");
+        bdd = bd.divide(bdd, 10000, BigDecimal.ROUND_HALF_UP);
+        System.out.println(bdd.toString());
+        System.out.println(bdd.toString().length());
+        System.out.println(longestDuplicate(bdd.toString()).length());
+
+        for (int d = 1; d < 11; d++) {
+            BigDecimal a = new BigDecimal("1");
+            BigDecimal b = new BigDecimal(d + "");
+            BigDecimal unitFraction = a.divide(b,
+                    10000, BigDecimal.ROUND_HALF_UP);
+            if (longestDuplicate(unitFraction.toString()).length() == 4999)
+                System.out.println(a.toString() + " / "
+                        + b.toString() + " = "
+                        + ".(1)");
+            else
+                System.out.println(a.toString() + " / "
+                        + b.toString() + " = "
+                        + ".(" + unitFraction.toString().length() + ")");
+        }
+        return -1;
+    }
+
+    private static String longestDuplicate(String text) {
+        String longest = "";
+        for (int i = 0; i < text.length() - 2 * longest.length() * 2; i++) {
+            OUTER:
+            for (int j = longest.length() + 1; j * 2 < text.length() - i; j++) {
+                String find = text.substring(i, i + j);
+                for (int k = i + j; k <= text.length() - j; k++) {
+                    if (text.substring(k, k + j).equals(find)) {
+                        longest = find;
+                        continue OUTER;
+                    }
+                }
+                break;
+            }
+        }
+        return longest;
     }
 
     private static int thousandDigitFibNumber() {
@@ -197,7 +244,8 @@ public class Multiple {
     }
 
     private static boolean isAbundant(long n) {
-        return sumOfProperDivisors(n) > n ? true : false;
+        if (sumOfProperDivisors(n) > n ? true : false) return true;
+        else return false;
     }
 
     private static long sumOfProperDivisors(long n) {

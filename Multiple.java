@@ -49,7 +49,6 @@ public class Multiple {
         System.out.println();
 
         System.out.println(pythagoreanTriplet());
-
         System.out.println(summationOfPrimes());
 
         long[] f = factors(28);
@@ -57,7 +56,6 @@ public class Multiple {
             System.out.print(e + " ");
         System.out.println();
 
-        //System.out.println(firstTriangNumberWithFactors(500));
         System.out.println(fasterFirstTriangNumber(500));
 
         long[] q = collatzSequence(13);
@@ -69,9 +67,6 @@ public class Multiple {
                 System.out.print(e);
         }
 
-        System.out.println();
-        //System.out.println(longestCollatzSequence());
-
         BigInteger number = BigInteger.TWO;
         number = number.pow(15);
         System.out.println(number.toString());
@@ -80,9 +75,7 @@ public class Multiple {
 
         System.out.println(wordNumberCount(5));
         System.out.println(wordNumberCount(1000));
-
         System.out.println(numberOfLatticePaths(20));
-
         System.out.println(digitSum(factorial(10)));
         System.out.println(digitSum(factorial(100)));
 
@@ -244,7 +237,8 @@ public class Multiple {
     }
 
     private static boolean isAbundant(long n) {
-        if (sumOfProperDivisors(n) > n ? true : false) return true;
+        if (sumOfProperDivisors(n) > n ?
+                true : false) return true;
         else return false;
     }
 
@@ -397,13 +391,6 @@ public class Multiple {
         }
     }
 
-    /**
-     * Number of lattice paths from (0,0) to (gridSize, gridSize)
-     * in a quadratic lattice.
-     *
-     * @param gridSize
-     * @return numberOfPaths
-     */
     private static long numberOfLatticePaths(int gridSize) {
         int m = 2 * gridSize;
         int n = gridSize;
@@ -412,13 +399,6 @@ public class Multiple {
         return numberOfPaths;
     }
 
-    /**
-     * A simple n choose k implementation.
-     *
-     * @param x
-     * @param y
-     * @return
-     */
     private static double choose(int x, int y) {
         if (y < 0 || y > x)
             return 0;

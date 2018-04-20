@@ -100,7 +100,73 @@ public class Multiple {
         System.out.println(thousandDigitFibNumber() + 1);
         System.out.println();
 
-        System.out.println(reciprocalCycles());
+        //System.out.println(reciprocalCycles());
+
+        anotherCycles();
+    }
+
+    private static void anotherCycles() {
+        BigDecimal a = new BigDecimal("1");
+        BigDecimal b = new BigDecimal("7");
+        BigDecimal q = a.divide(b, 1000, BigDecimal.ROUND_HALF_UP);
+        String fractionDecimals = q.toString().substring(2);
+        System.out.println(fractionDecimals);
+        int k = 2;
+        int n = fractionDecimals.length() / 2 - 1;
+
+        String isolatedCycle = "empty";
+
+        int c = 1;
+        int firstFraction = Integer
+                .parseInt(fractionDecimals.charAt(0) + "");
+        for (int i = 1; i < k; i++) {
+            if (Integer.parseInt(fractionDecimals.charAt(i)
+                    + "") == firstFraction)
+                c++;
+        }
+
+        if (c == k) {
+            isolatedCycle = firstFraction + "";
+        } else {
+            while (k < n) {
+                int firstSum = 0;
+                int secondSum = 0;
+                for (int i = 0; i < k; i++)
+                    firstSum += Integer.parseInt
+                            (fractionDecimals.charAt(i) + "");
+                for (int i = k; i < 2 * k; i++)
+                    secondSum += Integer.parseInt
+                            (fractionDecimals.charAt(i) + "");
+                if (firstSum == secondSum) {
+                    if (detectCycle(fractionDecimals, k))
+                        break;
+                } else
+                    k++;
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < k; i++)
+                stringBuilder.append(fractionDecimals.charAt(i));
+
+            isolatedCycle = stringBuilder.toString();
+        }
+
+        System.out.println(isolatedCycle);
+    }
+
+    private static boolean detectCycle(String fractions,
+                                       int cycleLength) {
+        int k = cycleLength;
+        int c = 0;
+
+        for (int i = 0; i < k; i++) {
+            if (fractions.charAt(i)
+                    == fractions.charAt(i + 3*k))
+                c++;
+        }
+
+        boolean result = c == cycleLength ? true : false;
+        return result;
     }
 
     private static int reciprocalCycles() {

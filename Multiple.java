@@ -106,16 +106,35 @@ public class Multiple {
     }
 
     private static void anotherCycles() {
-        for (int d = 2; d <= 10; d++) {
+        for (int d = 2; d <= 100; d++) {
             BigDecimal a = new BigDecimal("1");
             BigDecimal b = new BigDecimal(d + "");
             BigDecimal q = a.divide(b, 1000, BigDecimal.ROUND_HALF_UP);
             String fractionDecimals = q.toString().substring(2);
             System.out.println(fractionDecimals);
-            int k = 2;
-            int n = fractionDecimals.length() / 2 - 1;
 
             String isolatedCycle = "empty";
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(fractionDecimals);
+
+            if (fractionDecimals.charAt(fractionDecimals.length() - 1) == '0') {
+                for (int i = fractionDecimals.length() - 1; i >= 0; i--) {
+                    if (fractionDecimals.charAt(i) == '0')
+                        stringBuilder.deleteCharAt(i);
+                    else
+                        break;
+                }
+            }
+
+            fractionDecimals = stringBuilder.toString();
+
+            if (fractionDecimals.length() == 1) {
+                System.out.println(fractionDecimals);
+                continue;
+            }
+
+            int k = 2;
+            int n = fractionDecimals.length() / 2 - 1;
 
             int c = 1;
             int firstFraction = Integer
@@ -145,13 +164,11 @@ public class Multiple {
                         k++;
                 }
 
-                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder = new StringBuilder();
                 for (int i = 0; i < k; i++)
                     stringBuilder.append(fractionDecimals.charAt(i));
-
                 isolatedCycle = stringBuilder.toString();
             }
-
             System.out.println(isolatedCycle);
         }
     }
@@ -850,10 +867,12 @@ public class Multiple {
 
     private static long digitProduct(String s) {
         long product = 1;
-        for (int i = 0; i < s.length(); i++) {
+
+       for (int i = 0; i < s.length(); i++) {
             long n = Integer.parseInt(s.charAt(i) + "");
             product *= n;
         }
+
         return product;
     }
 
@@ -864,7 +883,6 @@ public class Multiple {
 
         int nSqrt = (int) Math.sqrt((double) n);
 
-        // Maybe <= here
         for (int i = 2; i < nSqrt; i++) {
             if (A[i]) {
                 for (int j = (i*i); j < n; j+=i)
@@ -885,10 +903,12 @@ public class Multiple {
     private static int sumSquareDifference(int n) {
         int sumOfSquares = 0;
         int naturalSum = 0;
+
         for (int i = 1; i <= n; i++) {
             sumOfSquares += (i * i);
             naturalSum += i;
         }
+
         int squareOfSum = naturalSum * naturalSum;
         int sumSquareDifference = squareOfSum - sumOfSquares;
         return sumSquareDifference;
@@ -921,6 +941,7 @@ public class Multiple {
                     palindromes.add(n);
             }
         }
+
         return Collections.max(palindromes);
     }
 
@@ -941,6 +962,7 @@ public class Multiple {
             n = a * b;
             c++;
         }
+
         return n;
     }
 
@@ -962,10 +984,10 @@ public class Multiple {
             if (n.mod(f) == BigInteger.ZERO) {
                 a.add(f);
                 n = n.divide(f);
-            } else {
+            } else
                 f = f.add(BigInteger.ONE);
-            }
         }
+
         return a;
     }
 
@@ -1003,19 +1025,21 @@ public class Multiple {
             d = gcd(Math.abs(x-y), n);
         }
 
-        if (d == n) {
+        if (d == n)
             return -1;
-        } else
+        else
             return d;
     }
 
     private static int gcd(int a, int b) {
         int remainder = 0;
+
         while (b != 0) {
             remainder = a % b;
             a = b;
             b = remainder;
         }
+
         return a;
     }
 
@@ -1033,6 +1057,7 @@ public class Multiple {
             }
             n++;
         }
+
         return sumOfEvenFibNumbers;
     }
 
@@ -1045,6 +1070,7 @@ public class Multiple {
                     || realNumber % 5 == 0)
                 sum += realNumber;
         }
+
         return sum;
     }
 
@@ -1054,9 +1080,8 @@ public class Multiple {
         f[0] = 0;
         f[1] = 1;
 
-        for (i = 2; i <= n; i++) {
+        for (i = 2; i <= n; i++)
             f[i] = f[i-1] + f[i-2];
-        }
 
         return f[n];
     }

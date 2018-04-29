@@ -1,0 +1,20 @@
+         Name         |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+----------------------+----------+----------+-------------+-------------+-----------------------
+ microfon_development | microfon | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ microfon_production  | microfon | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ microfon_test        | microfon | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ postgres             | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ redmine              | redmine  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ template0            | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+                      |          |          |             |             | postgres=CTc/postgres
+ template1            | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+                      |          |          |             |             | postgres=CTc/postgres
+ wemind_development   | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ wemind_production    | snark    | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ wemind_test          | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =Tc/postgres         +
+                      |          |          |             |             | postgres=CTc/postgres+
+                      |          |          |             |             | kliniken=C/postgres  +
+                      |          |          |             |             | userland=C/postgres  +
+                      |          |          |             |             | former=C/postgres    +
+                      |          |          |             |             | snark=C/postgres
+(10 rows)

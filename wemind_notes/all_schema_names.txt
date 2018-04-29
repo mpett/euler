@@ -1,0 +1,12 @@
+    List of schemas
+    Name    |   Owner
+------------+-----------
+ former     | former
+ kliniken   | kliniken
+ marketing  | marketing
+ medakt     | postgres
+ public     | postgres
+ snark      | snark
+ userland   | userland
+ wemind_api | postgres
+(8 rows)

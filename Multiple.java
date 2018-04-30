@@ -100,9 +100,34 @@ public class Multiple {
         System.out.println(thousandDigitFibNumber() + 1);
         System.out.println();
 
-        //System.out.println(reciprocalCycles());
+        thridCycles();
+    }
 
-        anotherCycles();
+    private static void thridCycles() {
+        for (int d = 2; d <= 1000; d++) {
+            BigDecimal a = new BigDecimal("1");
+            BigDecimal b = new BigDecimal(d + "");
+            BigDecimal q = a.divide(b, 1000, BigDecimal.ROUND_HALF_UP);
+            String fractionDecimals = q.toString().substring(2);
+            System.out.println(fractionDecimals);
+
+            String isolatedCycle = "empty";
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(fractionDecimals);
+
+            if (fractionDecimals.charAt(fractionDecimals.length() - 1) == '0') {
+                for (int i = fractionDecimals.length() - 1; i >= 0; i--) {
+                    if (fractionDecimals.charAt(i) == '0')
+                        stringBuilder.deleteCharAt(i);
+                    else
+                        break;
+                }
+            }
+
+            fractionDecimals = stringBuilder.toString();
+
+            System.out.println(fractionDecimals);
+        }
     }
 
     private static void anotherCycles() {

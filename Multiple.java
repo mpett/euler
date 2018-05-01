@@ -100,11 +100,11 @@ public class Multiple {
         System.out.println(thousandDigitFibNumber() + 1);
         System.out.println();
 
-        thridCycles();
+        thirdCycles();
     }
 
-    private static void thridCycles() {
-        for (int d = 2; d <= 1000; d++) {
+    private static void thirdCycles() {
+        for (int d = 2; d <= 30; d++) {
             BigDecimal a = new BigDecimal("1");
             BigDecimal b = new BigDecimal(d + "");
             BigDecimal q = a.divide(b, 1000, BigDecimal.ROUND_HALF_UP);

@@ -130,6 +130,21 @@ public class Multiple {
         }
     }
 
+    private static boolean secondDetectCycle(String fractions, int cycleLength,
+                                             int startingPosition) {
+        int k = cycleLength;
+        int c = 0;
+
+        for (int i = startingPosition; i < k; i++) {
+            if (fractions.charAt(i)
+                    == fractions.charAt(i + 3*k))
+                c++;
+        }
+
+        boolean result = c == cycleLength ? true : false;
+        return result;
+    }
+
     private static void anotherCycles() {
         for (int d = 2; d <= 100; d++) {
             BigDecimal a = new BigDecimal("1");

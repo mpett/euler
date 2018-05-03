@@ -40,6 +40,10 @@ public class AtTheMovies {
                 if ((currentCharacter == 117 && previousCharacter == 92)
                         || (currentCharacter == 32 && previousCharacter == 32))
                     continue;
+                if (previousCharacter >= 48 && previousCharacter <= 57)
+                    continue;
+                if (previousCharacter == 92)
+                    continue;
             }
 
             if ((currentCharacter >= 65 && currentCharacter <= 90)
@@ -48,7 +52,7 @@ public class AtTheMovies {
                 stringBuilder.append(currentCharacter);
         }
 
-        reviewText = stringBuilder.toString();
+        reviewText = stringBuilder.toString().toLowerCase();
         review.reviewText = reviewText;
     }
 

@@ -34,11 +34,17 @@ public class AtTheMovies {
         for (int characterIndex = 0; characterIndex
                 < reviewText.length(); characterIndex++) {
             char currentCharacter = reviewText.charAt(characterIndex);
-            if (currentCharacter >= 65 && currentCharacter <= 90)
-                stringBuilder.append(currentCharacter);
-            if (currentCharacter >= 97 && currentCharacter <= 122)
-                stringBuilder.append(currentCharacter);
-            if (currentCharacter == 32)
+
+            if (characterIndex >= 1) {
+                char previousCharacter = reviewText.charAt(characterIndex - 1);
+                if ((currentCharacter == 117 && previousCharacter == 92)
+                        || (currentCharacter == 32 && previousCharacter == 32))
+                    continue;
+            }
+
+            if ((currentCharacter >= 65 && currentCharacter <= 90)
+                    || (currentCharacter >= 97 && currentCharacter <= 122)
+                    || (currentCharacter == 32))
                 stringBuilder.append(currentCharacter);
         }
 
@@ -62,7 +68,8 @@ public class AtTheMovies {
         String[] inputs = input.split("}");
 
         for (String review : inputs) {
-            String[] reviewElements = review.split("\", \"");
+            String[] reviewElements
+                    = review.split("\", \"");
             String title = reviewElements[0].substring(11);
             String[] reviewAndStars =
                     reviewElements[1].split("\"Review\"");
@@ -71,7 +78,8 @@ public class AtTheMovies {
             String criticName = reviewElements[2]
                     .substring(10, reviewElements[2].length()-1);
             double starValue = Double.parseDouble(stars);
-            reviews.add(new Review(title, starValue, reviewText, criticName));
+            reviews.add(new Review(title, starValue,
+                    reviewText, criticName));
         }
     }
 

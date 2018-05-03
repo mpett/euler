@@ -50,16 +50,21 @@ public class AtTheMovies {
             Random random = new Random();
             int prediction = random.nextInt(4);
             String predictedAuthor = "";
+
             switch (prediction) {
                 case 0:
                     predictedAuthor = "Alpha";
+                    break;
                 case 1:
                     predictedAuthor = "Beta";
+                    break;
                 case 2:
                     predictedAuthor = "Gamma";
-                case 3:
+                    break;
+                default:
                     predictedAuthor = "Delta";
             }
+
             if (predictedAuthor.equals(testReview.criticName))
                 numCorrect++;
         }

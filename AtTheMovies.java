@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class AtTheMovies {
 
     private static ArrayList<Review> reviews;
+    private static final int TEST_SET_SIZE = 100;
 
     public static void main(String[] args) {
         reviews = new ArrayList<>();
@@ -16,15 +17,21 @@ public class AtTheMovies {
             e.printStackTrace();
         }
 
-        for (Review review : reviews) {
-            cleanReviewTextFromNonAlphCharacters(review);
+        ArrayList<Review> trainingSet = new ArrayList<>();
+        ArrayList<Review> testSet = new ArrayList<>();
 
-            System.out.println("Title: " + review.movieTitle);
-            System.out.println("Stars: " + review.starValue);
-            System.out.println("Critic: " + review.criticName);
-            System.out.println("Review: " + review.reviewText);
-            System.out.println();
+        int reviewIndex = 0;
+        for (Review review : reviews) {
+            if (reviewIndex < reviews.size()
+                    - TEST_SET_SIZE)
+                trainingSet.add(review);
+            else
+                testSet.add(review);
+            reviewIndex++;
         }
+
+        System.out.println("Training Set Size: " + trainingSet.size());
+        System.out.println("Test Set Size: " + testSet.size());
     }
 
     private static void cleanReviewTextFromNonAlphCharacters(Review review) {

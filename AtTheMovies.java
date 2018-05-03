@@ -2,23 +2,28 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AtTheMovies {
 
     private static ArrayList<Review> reviews;
+    private static ArrayList<Review> trainingSet;
+    private static ArrayList<Review> testSet;
+
     private static final int TEST_SET_SIZE = 100;
 
     public static void main(String[] args) {
         reviews = new ArrayList<>();
 
         try {
-            handleTrainingData("train.json");
+            handleTrainingData
+                    ("train.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        ArrayList<Review> trainingSet = new ArrayList<>();
-        ArrayList<Review> testSet = new ArrayList<>();
+        trainingSet = new ArrayList<>();
+        testSet = new ArrayList<>();
 
         int reviewIndex = 0;
         for (Review review : reviews) {
@@ -30,8 +35,37 @@ public class AtTheMovies {
             reviewIndex++;
         }
 
-        System.out.println("Training Set Size: " + trainingSet.size());
-        System.out.println("Test Set Size: " + testSet.size());
+        System.out.println("Training Set Size: "
+                + trainingSet.size());
+        System.out.println("Test Set Size: "
+                + testSet.size());
+
+        test();
+    }
+
+    private static void test() {
+        int numCorrect = 0;
+
+        for (Review testReview : testSet) {
+            Random random = new Random();
+            int prediction = random.nextInt(4);
+            String predictedAuthor = "";
+            switch (prediction) {
+                case 0:
+                    predictedAuthor = "Alpha";
+                case 1:
+                    predictedAuthor = "Beta";
+                case 2:
+                    predictedAuthor = "Gamma";
+                case 3:
+                    predictedAuthor = "Delta";
+            }
+            if (predictedAuthor.equals(testReview.criticName))
+                numCorrect++;
+        }
+
+        System.out.println("Num correct: " + numCorrect
+                        + " / " + TEST_SET_SIZE);
     }
 
     private static void cleanReviewTextFromNonAlphCharacters(Review review) {

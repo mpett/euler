@@ -160,6 +160,11 @@ public class AtTheMovies {
         private HashMap<String, Integer> deltaWords;
         private ArrayList<Review> trainingSet;
 
+        private int numberOfAlphaReviews;
+        private int numberOfBetaReviews;
+        private int numberOfDeltaReviews;
+        private int numberOfGammaReviews;
+
         public PredictionModel(ArrayList<Review> trainingSet) {
             alphaWords = new HashMap<>();
             betaWords = new HashMap<>();
@@ -182,7 +187,7 @@ public class AtTheMovies {
             Object[] commonGammaWords = gammaWords.keySet().toArray();
             Object[] commonDeltaWords = deltaWords.keySet().toArray();
 
-            int outputLength = 301;
+            int outputLength = 31;
 
             System.out.println("Maps have been sorted");
 
@@ -224,6 +229,30 @@ public class AtTheMovies {
                 System.out.println(commonDeltaWords[i].toString() + " "
                         + deltaWords.get(commonDeltaWords[i]
                         .toString()));
+            }
+
+            countReviewsByCritic();
+
+            System.out.println();
+
+            System.out.println("Alpha: " + numberOfAlphaReviews);
+            System.out.println("Beta: " + numberOfBetaReviews);
+            System.out.println("Delta: " + numberOfDeltaReviews);
+            System.out.println("Gamma: " + numberOfGammaReviews);
+            System.out.println("----------------------------");
+            System.out.println("Total: " + this.trainingSet.size());
+        }
+
+        private void countReviewsByCritic() {
+            for (Review review : this.trainingSet) {
+                if (review.criticName.equals("Alpha"))
+                    numberOfAlphaReviews++;
+                else if (review.criticName.equals("Beta"))
+                    numberOfBetaReviews++;
+                else if (review.criticName.equals("Delta"))
+                    numberOfDeltaReviews++;
+                else if (review.criticName.equals("Gamma"))
+                    numberOfGammaReviews++;
             }
         }
 

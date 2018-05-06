@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class AtTheMovies {
@@ -41,6 +42,23 @@ public class AtTheMovies {
                 + testSet.size());
 
         test();
+
+        System.out.println();
+
+        for (Review review : trainingSet) {
+            cleanReviewTextFromNonAlphCharacters(review);
+        }
+
+        for (Review review : trainingSet) {
+            System.out.println("Title: " + review.movieTitle);
+            System.out.println("Critic Name: " + review.criticName);
+            System.out.println("Stars: " + review.starValue);
+            System.out.println("Text: " + review.reviewText);
+            System.out.println();
+        }
+
+        PredictionModel predictionModel = new PredictionModel(trainingSet);
+        predictionModel.train();
     }
 
     private static void test() {
@@ -130,6 +148,72 @@ public class AtTheMovies {
             double starValue = Double.parseDouble(stars);
             reviews.add(new Review(title, starValue,
                     reviewText, criticName));
+        }
+    }
+
+    static class PredictionModel {
+        private HashMap<String, Integer> alphaWords;
+        private HashMap<String, Integer> betaWords;
+        private HashMap<String, Integer> gammaWords;
+        private HashMap<String, Integer> deltaWords;
+        private ArrayList<Review> trainingSet;
+
+        public PredictionModel(ArrayList<Review> trainingSet) {
+            alphaWords = new HashMap<>();
+            betaWords = new HashMap<>();
+            gammaWords = new HashMap<>();
+            deltaWords = new HashMap<>();
+            this.trainingSet = trainingSet;
+        }
+
+        public void train() {
+            populateCriticWordMaps();
+        }
+
+        private void populateCriticWordMaps() {
+            for (Review review : this.trainingSet) {
+                String[] reviewWords = review.reviewText.split(" ");
+                for (String reviewWord : reviewWords) {
+                    if (review.criticName.equals("Alpha")) {
+                        if (alphaWords.containsKey(reviewWord)) {
+                            int count = alphaWords.get(reviewWord);
+                            int incremented = count++;
+                            alphaWords.replace(reviewWord,
+                                    count, incremented);
+                        } else {
+                            alphaWords.put(reviewWord, 1);
+                        }
+                    } else if (review.criticName.equals("Beta")) {
+                        if (betaWords.containsKey(reviewWord)) {
+                            int count = betaWords.get(reviewWord);
+                            int incremented = count++;
+                            betaWords.replace(reviewWord,
+                                    count, incremented);
+                        } else {
+                            betaWords.put(reviewWord, 1);
+                        }
+                    } else if (review.criticName.equals("Gamma")) {
+                        if (gammaWords.containsKey(reviewWord)) {
+                            int count = gammaWords.get(reviewWord);
+                            int incremented = count++;
+                            gammaWords.replace(reviewWord,
+                                    count, incremented);
+                        } else {
+                            gammaWords.put(reviewWord, 1);
+                        }
+                    } else if (review.criticName.equals("Delta")) {
+                        if (deltaWords.containsKey(reviewWord)) {
+                            int count = deltaWords.get(reviewWord);
+                            int incremented = count++;
+                            deltaWords.replace(reviewWord,
+                                    count, incremented);
+                        } else {
+                            deltaWords.put(reviewWord, 1);
+                        }
+                    }
+                }
+            }
+            System.out.println("Maps have been populated");
         }
     }
 

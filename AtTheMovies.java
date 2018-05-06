@@ -1,9 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.security.KeyStore;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AtTheMovies {
 
@@ -59,6 +59,8 @@ public class AtTheMovies {
 
         PredictionModel predictionModel = new PredictionModel(trainingSet);
         predictionModel.train();
+
+
     }
 
     private static void test() {
@@ -168,6 +170,61 @@ public class AtTheMovies {
 
         public void train() {
             populateCriticWordMaps();
+            System.out.println("Maps have been populated");
+
+            alphaWords = sortMap(alphaWords);
+            betaWords = sortMap(betaWords);
+            gammaWords = sortMap(gammaWords);
+            deltaWords = sortMap(deltaWords);
+
+            Object[] commonAlphaWords = alphaWords.keySet().toArray();
+            Object[] commonBetaWords = betaWords.keySet().toArray();
+            Object[] commonGammaWords = gammaWords.keySet().toArray();
+            Object[] commonDeltaWords = deltaWords.keySet().toArray();
+
+            int outputLength = 301;
+
+            System.out.println("Maps have been sorted");
+
+            System.out.println();
+            System.out.println("ALPHA");
+
+            for (int i = commonAlphaWords.length-1;
+                 i > commonAlphaWords.length-outputLength; i--) {
+                System.out.println(commonAlphaWords[i].toString() + " "
+                        + alphaWords.get(commonAlphaWords[i]
+                                .toString()));
+            }
+
+            System.out.println();
+            System.out.println("BETA");
+
+            for (int i = commonBetaWords.length-1;
+                 i > commonBetaWords.length-outputLength; i--) {
+                System.out.println(commonBetaWords[i].toString() + " "
+                        + betaWords.get(commonBetaWords[i]
+                        .toString()));
+            }
+
+            System.out.println();
+            System.out.println("GAMMA");
+
+            for (int i = commonGammaWords.length-1;
+                 i > commonGammaWords.length-outputLength; i--) {
+                System.out.println(commonGammaWords[i].toString() + " "
+                        + gammaWords.get(commonGammaWords[i]
+                        .toString()));
+            }
+
+            System.out.println();
+            System.out.println("DELTA");
+
+            for (int i = commonDeltaWords.length-1;
+                 i > commonDeltaWords.length-outputLength; i--) {
+                System.out.println(commonDeltaWords[i].toString() + " "
+                        + deltaWords.get(commonDeltaWords[i]
+                        .toString()));
+            }
         }
 
         private void populateCriticWordMaps() {
@@ -177,7 +234,7 @@ public class AtTheMovies {
                     if (review.criticName.equals("Alpha")) {
                         if (alphaWords.containsKey(reviewWord)) {
                             int count = alphaWords.get(reviewWord);
-                            int incremented = count++;
+                            int incremented = (count + 1);
                             alphaWords.replace(reviewWord,
                                     count, incremented);
                         } else {
@@ -186,7 +243,7 @@ public class AtTheMovies {
                     } else if (review.criticName.equals("Beta")) {
                         if (betaWords.containsKey(reviewWord)) {
                             int count = betaWords.get(reviewWord);
-                            int incremented = count++;
+                            int incremented = (count + 1);
                             betaWords.replace(reviewWord,
                                     count, incremented);
                         } else {
@@ -195,7 +252,7 @@ public class AtTheMovies {
                     } else if (review.criticName.equals("Gamma")) {
                         if (gammaWords.containsKey(reviewWord)) {
                             int count = gammaWords.get(reviewWord);
-                            int incremented = count++;
+                            int incremented = (count + 1);
                             gammaWords.replace(reviewWord,
                                     count, incremented);
                         } else {
@@ -204,7 +261,7 @@ public class AtTheMovies {
                     } else if (review.criticName.equals("Delta")) {
                         if (deltaWords.containsKey(reviewWord)) {
                             int count = deltaWords.get(reviewWord);
-                            int incremented = count++;
+                            int incremented = (count + 1);
                             deltaWords.replace(reviewWord,
                                     count, incremented);
                         } else {
@@ -213,7 +270,17 @@ public class AtTheMovies {
                     }
                 }
             }
-            System.out.println("Maps have been populated");
+        }
+
+        private HashMap<String, Integer>
+            sortMap(HashMap<String, Integer> unsortedMap) {
+            HashMap<String, Integer> sortedMap =
+                    unsortedMap.entrySet().stream()
+                            .sorted(Map.Entry.comparingByValue())
+                            .collect(Collectors.toMap(Map.Entry::getKey,
+                                    Map.Entry::getValue,
+                                    (e1, e2) -> e1, LinkedHashMap::new));
+            return sortedMap;
         }
     }
 

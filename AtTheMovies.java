@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.security.KeyStore;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,7 @@ public class AtTheMovies {
 
     private static final int TEST_SET_SIZE = 100;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         reviews = new ArrayList<>();
 
         try {
@@ -41,7 +40,7 @@ public class AtTheMovies {
         System.out.println("Test Set Size: "
                 + testSet.size());
 
-        test();
+        predictAllReviews();
 
         System.out.println();
 
@@ -59,9 +58,22 @@ public class AtTheMovies {
 
         PredictionModel predictionModel = new PredictionModel(trainingSet);
         predictionModel.train();
+
+        int numCorrect = 0;
+
+        for (Review testReview : testSet) {
+            String predictedCritic
+                    = predictionModel.predict(testReview);
+            if (predictedCritic.equals(testReview.criticName))
+                numCorrect++;
+
+        }
+
+        System.out.println();
+        System.out.println("Num Correct: " + numCorrect + " / " + TEST_SET_SIZE);
     }
 
-    private static void test() {
+    private static void predictAllReviews() {
         int numCorrect = 0;
 
         for (Review testReview : testSet) {
@@ -98,6 +110,10 @@ public class AtTheMovies {
         for (int characterIndex = 0; characterIndex
                 < reviewText.length(); characterIndex++) {
             char currentCharacter = reviewText.charAt(characterIndex);
+            if (currentCharacter == 44)
+                review.numCommas += 1;
+            if (currentCharacter == 46)
+                review.numDots += 1;
 
             if (characterIndex >= 1) {
                 char previousCharacter = reviewText.charAt(characterIndex - 1);
@@ -195,6 +211,59 @@ public class AtTheMovies {
             referenceFeatureBeta = new int[NUMBER_OF_REFERENCE_FEATURES];
             referenceFeatureGamma = new int[NUMBER_OF_REFERENCE_FEATURES];
             referenceFeatureDelta = new int[NUMBER_OF_REFERENCE_FEATURES];
+        }
+
+        public String predict(Review review) throws Exception {
+            String[] reviewWords = review.reviewText.split(" ");
+            double[] featureVector = new double[NUMBER_OF_REFERENCE_FEATURES];
+            double numThe = 0.0; double numAnd = 0.0; double numOf = 0.0;
+            double numIt = 0.0; double numIs = 0.0;
+
+            for (String word : reviewWords) {
+                if (word.equals("the"))
+                    numThe += 1.0;
+                else if (word.equals("and"))
+                    numAnd += 1.0;
+                else if (word.equals("of"))
+                    numOf += 1.0;
+                else if (word.equals("it"))
+                    numIt += 1.0;
+                else if (word.equals("is"))
+                    numIs += 1.0;
+            }
+
+            featureVector[0] = numThe; featureVector[1] = numAnd;
+            featureVector[2] = numOf; featureVector[3] = numIt;
+            featureVector[4] = numIs;
+
+            double[] refAlpha = new double[NUMBER_OF_REFERENCE_FEATURES];
+            double[] refBeta = new double[NUMBER_OF_REFERENCE_FEATURES];
+            double[] refGamma = new double[NUMBER_OF_REFERENCE_FEATURES];
+            double[] refDelta = new double[NUMBER_OF_REFERENCE_FEATURES];
+
+            for (int i = 0; i < NUMBER_OF_REFERENCE_FEATURES; i++)
+                refAlpha[i] = (double) referenceFeatureAlpha[i];
+            for (int i = 0; i < NUMBER_OF_REFERENCE_FEATURES; i++)
+                refBeta[i] = (double) referenceFeatureBeta[i];
+            for (int i = 0; i < NUMBER_OF_REFERENCE_FEATURES; i++)
+                refGamma[i] = (double) referenceFeatureGamma[i];
+            for (int i = 0; i < NUMBER_OF_REFERENCE_FEATURES; i++)
+                refDelta[i] = (double) referenceFeatureDelta[i];
+
+            HashMap<String, Double> similarities = new HashMap<>();
+
+            similarities.put("Alpha", distance(featureVector, refAlpha));
+            similarities.put("Beta", distance(featureVector, refBeta));
+            similarities.put("Gamma", distance(featureVector, refGamma));
+            similarities.put("Delta", distance(featureVector, refDelta));
+
+            similarities = sortMapDouble(similarities);
+
+            Object[] result = similarities.keySet().toArray();
+
+            String prediction = result[0].toString();
+
+            return prediction;
         }
 
         public void train() {
@@ -367,6 +436,17 @@ public class AtTheMovies {
             }
         }
 
+        private HashMap<String, Double>
+        sortMapDouble(HashMap<String, Double> unsortedMap) {
+            HashMap<String, Double> sortedMap =
+                    unsortedMap.entrySet().stream()
+                            .sorted(Map.Entry.comparingByValue())
+                            .collect(Collectors.toMap(Map.Entry::getKey,
+                                    Map.Entry::getValue,
+                                    (e1, e2) -> e1, LinkedHashMap::new));
+            return sortedMap;
+        }
+
         private HashMap<String, Integer>
             sortMap(HashMap<String, Integer> unsortedMap) {
             HashMap<String, Integer> sortedMap =
@@ -384,6 +464,8 @@ public class AtTheMovies {
         private double starValue;
         private String reviewText;
         private String criticName;
+        private int numDots;
+        private int numCommas;
 
         public Review(String movieTitle, double starValue,
                       String reviewText, String criticName) {
@@ -391,6 +473,8 @@ public class AtTheMovies {
             this.starValue = starValue;
             this.reviewText = reviewText;
             this.criticName = criticName;
+            numDots = 0;
+            numCommas = 0;
         }
     }
 }

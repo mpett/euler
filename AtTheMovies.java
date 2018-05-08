@@ -48,11 +48,17 @@ public class AtTheMovies {
             cleanReviewTextFromNonAlphCharacters(review);
         }
 
+        for (Review review : testSet) {
+            cleanReviewTextFromNonAlphCharacters(review);
+        }
+
         for (Review review : trainingSet) {
             System.out.println("Title: " + review.movieTitle);
             System.out.println("Critic Name: " + review.criticName);
             System.out.println("Stars: " + review.starValue);
             System.out.println("Text: " + review.reviewText);
+            System.out.println("Commas: " + review.numCommas);
+            System.out.println("Dots: " + review.numDots);
             System.out.println();
         }
 
@@ -186,6 +192,7 @@ public class AtTheMovies {
         private HashMap<String, Integer> betaWords;
         private HashMap<String, Integer> gammaWords;
         private HashMap<String, Integer> deltaWords;
+
         private ArrayList<Review> trainingSet;
 
         private int numberOfAlphaReviews;
@@ -198,7 +205,17 @@ public class AtTheMovies {
         private int[] referenceFeatureGamma;
         private int[] referenceFeatureDelta;
 
-        private final int NUMBER_OF_REFERENCE_FEATURES = 5;
+        private int averageAlphaDots;
+        private int averageBetaDots;
+        private int averageGammaDots;
+        private int averageDeltaDots;
+
+        private int averageAlphaCommas;
+        private int averageBetaCommas;
+        private int averageGammaCommas;
+        private int averageDeltaCommas;
+
+        private final int NUMBER_OF_REFERENCE_FEATURES = 7;
 
         public PredictionModel(ArrayList<Review> trainingSet) {
             alphaWords = new HashMap<>();
@@ -211,6 +228,56 @@ public class AtTheMovies {
             referenceFeatureBeta = new int[NUMBER_OF_REFERENCE_FEATURES];
             referenceFeatureGamma = new int[NUMBER_OF_REFERENCE_FEATURES];
             referenceFeatureDelta = new int[NUMBER_OF_REFERENCE_FEATURES];
+        }
+
+        private void countAverageDotsAndCommas() {
+            int totalAlphaDots = 0; int totalBetaDots = 0;
+            int totalGammaDots = 0; int totalDeltaDots = 0;
+            int totalAlphaCommas = 0; int totalBetaCommas = 0;
+            int totalGammaCommas = 0; int totalDeltaCommas = 0;
+            int totalDots = 0; int totalCommas = 0;
+
+            for (Review review : this.trainingSet) {
+                if (review.criticName.equals("Alpha")) {
+                    totalAlphaCommas += review.numCommas;
+                    totalAlphaDots += review.numDots;
+                    totalCommas += review.numCommas;
+                    totalDots += review.numDots;
+                } else if (review.criticName.equals("Beta")) {
+                    totalBetaCommas += review.numCommas;
+                    totalBetaDots += review.numDots;
+                    totalCommas += review.numCommas;
+                    totalDots += review.numDots;
+                } else if (review.criticName.equals("Gamma")) {
+                    totalGammaCommas += review.numCommas;
+                    totalGammaDots += review.numDots;
+                    totalCommas += review.numCommas;
+                    totalDots += review.numDots;
+                } else if (review.criticName.equals("Delta")) {
+                    totalDeltaCommas += review.numCommas;
+                    totalDeltaDots += review.numDots;
+                    totalCommas += review.numCommas;
+                    totalDots += review.numDots;
+                }
+            }
+
+            System.out.println("Total Dots: " + totalDots);
+            System.out.println("Total Commas: " + totalCommas);
+            System.out.println("Total Alpha Dots: " + totalAlphaDots);
+            System.out.println("Total Alpha Commas: " + totalAlphaCommas);
+
+            averageAlphaDots = totalAlphaDots / numberOfAlphaReviews;
+            averageBetaDots = totalBetaDots / numberOfBetaReviews;
+            averageGammaDots = totalGammaDots / numberOfGammaReviews;
+            averageDeltaDots = totalDeltaDots / numberOfDeltaReviews;
+
+            averageAlphaCommas = totalAlphaCommas / numberOfAlphaReviews;
+            averageBetaCommas = totalBetaCommas / numberOfBetaReviews;
+            averageGammaCommas = totalGammaCommas / numberOfGammaReviews;
+            averageDeltaCommas = totalDeltaCommas / numberOfDeltaReviews;
+
+            System.out.println("Avg Alpha Commas: " + averageAlphaCommas);
+            System.out.println("Avg Alpha Dots: " + averageAlphaDots);
         }
 
         public String predict(Review review) throws Exception {
@@ -235,6 +302,9 @@ public class AtTheMovies {
             featureVector[0] = numThe; featureVector[1] = numAnd;
             featureVector[2] = numOf; featureVector[3] = numIt;
             featureVector[4] = numIs;
+
+            featureVector[5] = review.numDots;
+            featureVector[6] = review.numCommas;
 
             double[] refAlpha = new double[NUMBER_OF_REFERENCE_FEATURES];
             double[] refBeta = new double[NUMBER_OF_REFERENCE_FEATURES];
@@ -363,6 +433,21 @@ public class AtTheMovies {
             System.out.println();
             System.out.println("Done populating reference features.");
             System.out.println();
+
+            countAverageDotsAndCommas();
+
+            System.out.println("Counted average number of " +
+                    "dots and commas per critic.\n");
+
+            referenceFeatureAlpha[5] = averageAlphaDots;
+            referenceFeatureBeta[5] = averageBetaDots;
+            referenceFeatureGamma[5] = averageGammaDots;
+            referenceFeatureDelta[5] = averageDeltaDots;
+
+            referenceFeatureAlpha[6] = averageAlphaCommas;
+            referenceFeatureBeta[6] = averageBetaCommas;
+            referenceFeatureGamma[6] = averageGammaCommas;
+            referenceFeatureDelta[6] = averageDeltaCommas;
 
             for (int v : referenceFeatureAlpha)
                 System.out.print(v + " ");

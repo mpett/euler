@@ -52,6 +52,8 @@ public class AtTheMovies {
             cleanReviewTextFromNonAlphCharacters(review);
         }
 
+        PredictionModel predictionModel = new PredictionModel(trainingSet);
+
         for (Review review : trainingSet) {
             System.out.println("Title: " + review.movieTitle);
             System.out.println("Critic Name: " + review.criticName);
@@ -59,10 +61,11 @@ public class AtTheMovies {
             System.out.println("Text: " + review.reviewText);
             System.out.println("Commas: " + review.numCommas);
             System.out.println("Dots: " + review.numDots);
+            System.out.println("Ings: " + predictionModel
+                    .numberOfIngInText(review));
             System.out.println();
         }
 
-        PredictionModel predictionModel = new PredictionModel(trainingSet);
         predictionModel.train();
 
         int numCorrect = 0;
@@ -215,7 +218,7 @@ public class AtTheMovies {
         private int averageGammaCommas;
         private int averageDeltaCommas;
 
-        private final int NUMBER_OF_REFERENCE_FEATURES = 7;
+        private final int NUMBER_OF_REFERENCE_FEATURES = 10;
 
         public PredictionModel(ArrayList<Review> trainingSet) {
             alphaWords = new HashMap<>();
@@ -228,6 +231,17 @@ public class AtTheMovies {
             referenceFeatureBeta = new int[NUMBER_OF_REFERENCE_FEATURES];
             referenceFeatureGamma = new int[NUMBER_OF_REFERENCE_FEATURES];
             referenceFeatureDelta = new int[NUMBER_OF_REFERENCE_FEATURES];
+        }
+
+        private int numberOfIngInText(Review review) {
+            String text = review.reviewText;
+            String[] words = text.split(" ");
+            int ingCounter = 0;
+            for (String word : words) {
+                if (word.contains("ing"));
+                    ingCounter++;
+            }
+            return ingCounter;
         }
 
         private void countAverageDotsAndCommas() {
@@ -284,7 +298,8 @@ public class AtTheMovies {
             String[] reviewWords = review.reviewText.split(" ");
             double[] featureVector = new double[NUMBER_OF_REFERENCE_FEATURES];
             double numThe = 0.0; double numAnd = 0.0; double numOf = 0.0;
-            double numIt = 0.0; double numIs = 0.0;
+            double numIt = 0.0; double numIs = 0.0; double numA = 0.0;
+            double numTo = 0.0; double numAs = 0.0;
 
             for (String word : reviewWords) {
                 if (word.equals("the"))
@@ -297,14 +312,21 @@ public class AtTheMovies {
                     numIt += 1.0;
                 else if (word.equals("is"))
                     numIs += 1.0;
+                else if (word.equals("a"))
+                    numA += 1.0;
+                else if (word.equals("to"))
+                    numTo += 1.0;
+                else if (word.equals("as"))
+                    numAs += 1.0;
             }
 
             featureVector[0] = numThe; featureVector[1] = numAnd;
             featureVector[2] = numOf; featureVector[3] = numIt;
-            featureVector[4] = numIs;
+            featureVector[4] = numIs; featureVector[5] = numA;
+            featureVector[6] = numTo; featureVector[7] = numAs;
 
-            featureVector[5] = review.numDots;
-            featureVector[6] = review.numCommas;
+            featureVector[8] = review.numDots;
+            featureVector[9] = review.numCommas;
 
             double[] refAlpha = new double[NUMBER_OF_REFERENCE_FEATURES];
             double[] refBeta = new double[NUMBER_OF_REFERENCE_FEATURES];
@@ -430,6 +452,21 @@ public class AtTheMovies {
             referenceFeatureGamma[4] = gammaWords.get("is") / numberOfGammaReviews;
             referenceFeatureDelta[4] = deltaWords.get("is") / numberOfDeltaReviews;
 
+            referenceFeatureAlpha[5] = alphaWords.get("a") / numberOfAlphaReviews;
+            referenceFeatureBeta[5] = betaWords.get("a") / numberOfBetaReviews;
+            referenceFeatureGamma[5] = gammaWords.get("a") / numberOfGammaReviews;
+            referenceFeatureDelta[5] = deltaWords.get("a") / numberOfDeltaReviews;
+
+            referenceFeatureAlpha[6] = alphaWords.get("to") / numberOfAlphaReviews;
+            referenceFeatureBeta[6] = betaWords.get("to") / numberOfBetaReviews;
+            referenceFeatureGamma[6] = gammaWords.get("to") / numberOfGammaReviews;
+            referenceFeatureDelta[6] = deltaWords.get("to") / numberOfDeltaReviews;
+
+            referenceFeatureAlpha[7] = alphaWords.get("as") / numberOfAlphaReviews;
+            referenceFeatureBeta[7] = betaWords.get("as") / numberOfBetaReviews;
+            referenceFeatureGamma[7] = gammaWords.get("as") / numberOfGammaReviews;
+            referenceFeatureDelta[7] = deltaWords.get("as") / numberOfDeltaReviews;
+
             System.out.println();
             System.out.println("Done populating reference features.");
             System.out.println();
@@ -439,15 +476,15 @@ public class AtTheMovies {
             System.out.println("Counted average number of " +
                     "dots and commas per critic.\n");
 
-            referenceFeatureAlpha[5] = averageAlphaDots;
-            referenceFeatureBeta[5] = averageBetaDots;
-            referenceFeatureGamma[5] = averageGammaDots;
-            referenceFeatureDelta[5] = averageDeltaDots;
+            referenceFeatureAlpha[8] = averageAlphaDots;
+            referenceFeatureBeta[8] = averageBetaDots;
+            referenceFeatureGamma[8] = averageGammaDots;
+            referenceFeatureDelta[8] = averageDeltaDots;
 
-            referenceFeatureAlpha[6] = averageAlphaCommas;
-            referenceFeatureBeta[6] = averageBetaCommas;
-            referenceFeatureGamma[6] = averageGammaCommas;
-            referenceFeatureDelta[6] = averageDeltaCommas;
+            referenceFeatureAlpha[9] = averageAlphaCommas;
+            referenceFeatureBeta[9] = averageBetaCommas;
+            referenceFeatureGamma[9] = averageGammaCommas;
+            referenceFeatureDelta[9] = averageDeltaCommas;
 
             for (int v : referenceFeatureAlpha)
                 System.out.print(v + " ");

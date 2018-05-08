@@ -218,7 +218,7 @@ public class AtTheMovies {
         private int averageGammaCommas;
         private int averageDeltaCommas;
 
-        private final int NUMBER_OF_REFERENCE_FEATURES = 11;
+        private final int NUMBER_OF_REFERENCE_FEATURES = 10;
 
         public PredictionModel(ArrayList<Review> trainingSet) {
             alphaWords = new HashMap<>();
@@ -234,30 +234,30 @@ public class AtTheMovies {
         }
 
         private void calculateIngReferenceFeatures() {
-            referenceFeatureAlpha[10] = 0;
-            referenceFeatureBeta[10] = 0;
-            referenceFeatureGamma[10] = 0;
-            referenceFeatureDelta[10] = 0;
+            referenceFeatureAlpha[9] = 0;
+            referenceFeatureBeta[9] = 0;
+            referenceFeatureGamma[9] = 0;
+            referenceFeatureDelta[9] = 0;
 
             for (Review review : this.trainingSet) {
                 if (review.criticName.equals("Alpha"))
-                    referenceFeatureAlpha[10]
+                    referenceFeatureAlpha[9]
                             += numberOfIngInText(review);
                 else if (review.criticName.equals("Beta"))
-                    referenceFeatureBeta[10] +=
+                    referenceFeatureBeta[9] +=
                             numberOfIngInText(review);
                 else if (review.criticName.equals("Gamma"))
-                    referenceFeatureGamma[10] +=
+                    referenceFeatureGamma[9] +=
                             numberOfIngInText(review);
                 else if (review.criticName.equals("Delta"))
-                    referenceFeatureDelta[10] +=
+                    referenceFeatureDelta[9] +=
                             numberOfIngInText(review);
             }
 
-            referenceFeatureAlpha[10] /= numberOfAlphaReviews;
-            referenceFeatureBeta[10] /= numberOfBetaReviews;
-            referenceFeatureGamma[10] /= numberOfGammaReviews;
-            referenceFeatureDelta[10] /= numberOfDeltaReviews;
+            referenceFeatureAlpha[9] /= numberOfAlphaReviews;
+            referenceFeatureBeta[9] /= numberOfBetaReviews;
+            referenceFeatureGamma[9] /= numberOfGammaReviews;
+            referenceFeatureDelta[9] /= numberOfDeltaReviews;
         }
 
         private int numberOfIngInText(Review review) {
@@ -350,15 +350,16 @@ public class AtTheMovies {
             featureVector[0] = numThe; featureVector[1] = numAnd;
             featureVector[2] = numOf; featureVector[3] = numIt;
             featureVector[4] = numIs; featureVector[5] = numA;
-            featureVector[6] = numTo; featureVector[7] = numAs;
+            featureVector[6] = numTo;
 
-            featureVector[8] = review.numDots;
-            featureVector[9] = review.numCommas;
-            featureVector[10] = numberOfIngInText(review);
+            featureVector[7] = review.numDots;
+            featureVector[8] = review.numCommas;
+            featureVector[9] = numberOfIngInText(review);
 
-        //    for (double v : featureVector)
-         //       System.out.print(v + " ");
-          //  System.out.println();
+            //System.out.println();
+            //for (double v : featureVector)
+            //    System.out.print(v + " ");
+            //System.out.println(review.criticName + "\n");
 
             double[] refAlpha = new double[NUMBER_OF_REFERENCE_FEATURES];
             double[] refBeta = new double[NUMBER_OF_REFERENCE_FEATURES];
@@ -494,11 +495,6 @@ public class AtTheMovies {
             referenceFeatureGamma[6] = gammaWords.get("to") / numberOfGammaReviews;
             referenceFeatureDelta[6] = deltaWords.get("to") / numberOfDeltaReviews;
 
-            referenceFeatureAlpha[7] = alphaWords.get("as") / numberOfAlphaReviews;
-            referenceFeatureBeta[7] = betaWords.get("as") / numberOfBetaReviews;
-            referenceFeatureGamma[7] = gammaWords.get("as") / numberOfGammaReviews;
-            referenceFeatureDelta[7] = deltaWords.get("as") / numberOfDeltaReviews;
-
             System.out.println();
             System.out.println("Done populating reference features.");
             System.out.println();
@@ -508,15 +504,15 @@ public class AtTheMovies {
             System.out.println("Counted average number of " +
                     "dots and commas per critic.\n");
 
-            referenceFeatureAlpha[8] = averageAlphaDots;
-            referenceFeatureBeta[8] = averageBetaDots;
-            referenceFeatureGamma[8] = averageGammaDots;
-            referenceFeatureDelta[8] = averageDeltaDots;
+            referenceFeatureAlpha[7] = averageAlphaDots;
+            referenceFeatureBeta[7] = averageBetaDots;
+            referenceFeatureGamma[7] = averageGammaDots;
+            referenceFeatureDelta[7] = averageDeltaDots;
 
-            referenceFeatureAlpha[9] = averageAlphaCommas;
-            referenceFeatureBeta[9] = averageBetaCommas;
-            referenceFeatureGamma[9] = averageGammaCommas;
-            referenceFeatureDelta[9] = averageDeltaCommas;
+            referenceFeatureAlpha[8] = averageAlphaCommas;
+            referenceFeatureBeta[8] = averageBetaCommas;
+            referenceFeatureGamma[8] = averageGammaCommas;
+            referenceFeatureDelta[8] = averageDeltaCommas;
 
             calculateIngReferenceFeatures();
 

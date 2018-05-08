@@ -120,6 +120,20 @@ public class AtTheMovies {
         review.reviewText = reviewText;
     }
 
+    public static double distance(double[] p1, double[] p2)
+                        throws Exception {
+        if (p1.length != p2.length)
+            throw new Exception();
+        double sum = 0.0D;
+
+        for(int i = 0; i < p1.length; ++i) {
+            double dp = p1[i] - p2[i];
+            sum += dp * dp;
+        }
+
+        return Math.sqrt(sum);
+    }
+
     private static void handleTrainingData(String inputFileName)
             throws IOException {
         BufferedReader reader = new BufferedReader(
@@ -168,6 +182,8 @@ public class AtTheMovies {
         private int[] referenceFeatureGamma;
         private int[] referenceFeatureDelta;
 
+        private final int NUMBER_OF_REFERENCE_FEATURES = 5;
+
         public PredictionModel(ArrayList<Review> trainingSet) {
             alphaWords = new HashMap<>();
             betaWords = new HashMap<>();
@@ -175,10 +191,10 @@ public class AtTheMovies {
             deltaWords = new HashMap<>();
             this.trainingSet = trainingSet;
 
-            referenceFeatureAlpha = new int[4];
-            referenceFeatureBeta = new int[4];
-            referenceFeatureGamma = new int[4];
-            referenceFeatureDelta = new int[4];
+            referenceFeatureAlpha = new int[NUMBER_OF_REFERENCE_FEATURES];
+            referenceFeatureBeta = new int[NUMBER_OF_REFERENCE_FEATURES];
+            referenceFeatureGamma = new int[NUMBER_OF_REFERENCE_FEATURES];
+            referenceFeatureDelta = new int[NUMBER_OF_REFERENCE_FEATURES];
         }
 
         public void train() {
@@ -255,23 +271,42 @@ public class AtTheMovies {
             referenceFeatureGamma[0] = gammaWords.get("the") / numberOfGammaReviews;
             referenceFeatureDelta[0] = deltaWords.get("the") / numberOfDeltaReviews;
 
-            referenceFeatureAlpha[1] = alphaWords.get("that") / numberOfAlphaReviews;
-            referenceFeatureBeta[1] = betaWords.get("that") / numberOfBetaReviews;
-            referenceFeatureGamma[1] = gammaWords.get("that") / numberOfGammaReviews;
-            referenceFeatureDelta[1] = deltaWords.get("that") / numberOfDeltaReviews;
+            referenceFeatureAlpha[1] = alphaWords.get("and") / numberOfAlphaReviews;
+            referenceFeatureBeta[1] = betaWords.get("and") / numberOfBetaReviews;
+            referenceFeatureGamma[1] = gammaWords.get("and") / numberOfGammaReviews;
+            referenceFeatureDelta[1] = deltaWords.get("and") / numberOfDeltaReviews;
 
-            referenceFeatureAlpha[2] = alphaWords.get("with") / numberOfAlphaReviews;
-            referenceFeatureBeta[2] = betaWords.get("with") / numberOfBetaReviews;
-            referenceFeatureGamma[2] = gammaWords.get("with") / numberOfGammaReviews;
-            referenceFeatureDelta[2] = deltaWords.get("with") / numberOfDeltaReviews;
+            referenceFeatureAlpha[2] = alphaWords.get("of") / numberOfAlphaReviews;
+            referenceFeatureBeta[2] = betaWords.get("of") / numberOfBetaReviews;
+            referenceFeatureGamma[2] = gammaWords.get("of") / numberOfGammaReviews;
+            referenceFeatureDelta[2] = deltaWords.get("of") / numberOfDeltaReviews;
 
-            referenceFeatureAlpha[3] = alphaWords.get("film") / numberOfAlphaReviews;
-            referenceFeatureBeta[3] = betaWords.get("film") / numberOfBetaReviews;
-            referenceFeatureGamma[3] = gammaWords.get("film") / numberOfGammaReviews;
-            referenceFeatureDelta[3] = deltaWords.get("film") / numberOfDeltaReviews;
+            referenceFeatureAlpha[3] = alphaWords.get("it") / numberOfAlphaReviews;
+            referenceFeatureBeta[3] = betaWords.get("it") / numberOfBetaReviews;
+            referenceFeatureGamma[3] = gammaWords.get("it") / numberOfGammaReviews;
+            referenceFeatureDelta[3] = deltaWords.get("it") / numberOfDeltaReviews;
+
+            referenceFeatureAlpha[4] = alphaWords.get("is") / numberOfAlphaReviews;
+            referenceFeatureBeta[4] = betaWords.get("is") / numberOfBetaReviews;
+            referenceFeatureGamma[4] = gammaWords.get("is") / numberOfGammaReviews;
+            referenceFeatureDelta[4] = deltaWords.get("is") / numberOfDeltaReviews;
 
             System.out.println();
             System.out.println("Done populating reference features.");
+            System.out.println();
+
+            for (int v : referenceFeatureAlpha)
+                System.out.print(v + " ");
+            System.out.println();
+            for (int v : referenceFeatureBeta)
+                System.out.print(v + " ");
+            System.out.println();
+            for (int v : referenceFeatureGamma)
+                System.out.print(v + " ");
+            System.out.println();
+            for (int v : referenceFeatureDelta)
+                System.out.print(v + " ");
+            System.out.println();
         }
 
         private void countReviewsByCritic() {

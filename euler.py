@@ -1,10 +1,14 @@
-def sum_of_even_valued_fib_numbers(n):
+from math import sqrt
+import decimal
+
+def sum_of_even_valued_fib_numbers():
     sum = 0
-    for number in range (2, n+2):
-        print(number)
-        fib_number = fibonacci(number)
-        if (fib_number % 2 == 0):
-            sum += fib_number
+    for n in range (2, 10000):
+        fib = fibonacci(n)
+        if (fib >= 4000000):
+            break
+        if (fib % 2 == 0):
+            sum += fib
     return sum
 
 def fibonacci(n):
@@ -29,5 +33,6 @@ if __name__ == '__main__':
     hello()
     result = multiples()
     print(result)
-    print(sum_of_even_valued_fib_numbers(10))
-    print(sum_of_even_valued_fib_numbers(4000000))
+    print(sum_of_even_valued_fib_numbers())
+    
+    

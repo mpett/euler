@@ -1,6 +1,19 @@
 from math import sqrt
 import decimal
 
+def prime_factors(n):
+    f = []
+    while (n % 2 == 0):
+        f += [2]
+        n = n / 2
+    for i in range(3, int(sqrt(n))+1, 2):
+        while (n % i == 0):
+            f += [i]
+            n = n / i
+    if (n > 2):
+        f += [n]
+    return f
+
 def sum_of_even_valued_fib_numbers():
     sum = 0
     for n in range (2, 10000):
@@ -34,5 +47,6 @@ if __name__ == '__main__':
     result = multiples()
     print(result)
     print(sum_of_even_valued_fib_numbers())
+    print(prime_factors(315))
     
     

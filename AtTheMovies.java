@@ -1,3 +1,5 @@
+package com.codebind.maven_at_the_movies;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -80,6 +82,15 @@ public class AtTheMovies {
 
         System.out.println();
         System.out.println("Num Correct: " + numCorrect + " / " + TEST_SET_SIZE);
+    }
+    
+    public AtTheMovies() {
+    	try {
+			main(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     private static void predictAllReviews() {

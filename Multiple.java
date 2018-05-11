@@ -1,3 +1,5 @@
+package com.codebind.maven_at_the_movies;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,8 +19,6 @@ public class Multiple {
         System.out.println(pollardRho(13195));
 
         ArrayList<Integer> r = trialDivision(324324);
-
-        String a_b;
 
         for (int e : r)
             System.out.print(e + " ");
@@ -102,15 +102,18 @@ public class Multiple {
 
         thirdCycles();
     }
+    
+    public Multiple() {
+    	Multiple.main(null);
+    }
 
-    private static void thirdCycles() {
+    @SuppressWarnings("deprecation")
+	private static void thirdCycles() {
         for (int d = 2; d <= 30; d++) {
             BigDecimal a = new BigDecimal("1");
             BigDecimal b = new BigDecimal(d + "");
             BigDecimal q = a.divide(b, 1000, BigDecimal.ROUND_HALF_UP);
             String fractionDecimals = q.toString().substring(2);
-            System.out.println(fractionDecimals);
-
             String isolatedCycle = "empty";
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(fractionDecimals);
@@ -125,12 +128,45 @@ public class Multiple {
             }
 
             fractionDecimals = stringBuilder.toString();
-
+            int longestCycleLength = 0;
+            
+            for (int i = 0; i < fractionDecimals.length() / 5; i++) {
+        		int againIndex = characterOccursAgain(fractionDecimals, i);
+        		if (againIndex > 0) {
+        			int cycleLength = againIndex - i;
+        			int startIndex = i;
+        			// Do a substring with start index.
+        			String subFractions = 
+        					fractionDecimals.substring(startIndex);
+        			boolean cycleFound = 
+        					detectCycle(subFractions, cycleLength);
+        			if (cycleFound) {
+        				longestCycleLength = cycleLength;
+        				break;
+        			}
+        		}
+            }
+            
             System.out.println(fractionDecimals);
+            System.out.println(longestCycleLength);
         }
     }
+    
+    private static int characterOccursAgain(String fraction, int index) {
+    	char lookingForCharacter = fraction.charAt(index);
+    	int returnIndex = 0;
+    	for (int i = index + 1; i < fraction.length() / 5; i++) {
+    		char characterCandidate = fraction.charAt(i);
+    		if (characterCandidate == lookingForCharacter) {
+    			returnIndex = i;
+    			break;
+    		}
+    	}
+    	return returnIndex;
+    }
 
-    private static boolean secondDetectCycle(String fractions, int cycleLength,
+    @SuppressWarnings("unused")
+	private static boolean secondDetectCycle(String fractions, int cycleLength,
                                              int startingPosition) {
         int k = cycleLength;
         int c = 0;
@@ -145,7 +181,8 @@ public class Multiple {
         return result;
     }
 
-    private static void anotherCycles() {
+    @SuppressWarnings({ "unused", "deprecation" })
+	private static void anotherCycles() {
         for (int d = 2; d <= 100; d++) {
             BigDecimal a = new BigDecimal("1");
             BigDecimal b = new BigDecimal(d + "");
@@ -228,7 +265,8 @@ public class Multiple {
         return result;
     }
 
-    private static int reciprocalCycles() {
+    @SuppressWarnings({ "deprecation", "unused" })
+	private static int reciprocalCycles() {
         BigDecimal bd = new BigDecimal("1");
         BigDecimal bdd = new BigDecimal("3");
         bdd = bd.divide(bdd, 10000, BigDecimal.ROUND_HALF_UP);

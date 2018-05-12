@@ -74,7 +74,7 @@ if __name__ == '__main__':
     print(prime_factors(315))
     print(prime_factors(600851475143))
     print(max(palindrome_product()))
-    print(smallest_multiple_2(10))
-    print(smallest_multiple_2(20))
+    print(smallest_multiple(10))
+    print(smallest_multiple(20))
     
     

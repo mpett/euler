@@ -112,6 +112,7 @@ if __name__ == '__main__':
     print(sieve_of_erathostenes(100))
     print(sieve_of_erathostenes(100)[5])
     print(sieve_of_erathostenes(200000)[10000])
+    print(sieve_of_erathostenes(300000000))
     
     
     

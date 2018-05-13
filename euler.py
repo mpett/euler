@@ -1,6 +1,20 @@
 from math import sqrt
 import decimal
 
+def sieve_of_erathostenes(n):
+    A = [None] * n
+    for i in range (2, n):
+        A[i] = True
+    for i in range (1, int(sqrt(n)) + 1):
+        if(A[i]):
+            for j in range(i**2,n,i):
+                A[j] = False
+    B = []
+    for i in range(1, n):
+        if (A[i]):
+            B.append(i)
+    return B
+
 def sum_square_difference(n):
     difference = square_of_sum(n) - sum_of_squares(n)
     return difference
@@ -95,6 +109,7 @@ if __name__ == '__main__':
     #print(smallest_multiple(20))
     print(sum_square_difference(10))
     print(sum_square_difference(100))
+    print(sieve_of_erathostenes(100))
     
     
     

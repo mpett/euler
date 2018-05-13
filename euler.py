@@ -1,6 +1,23 @@
 from math import sqrt
 import decimal
 
+def sum_square_difference(n):
+    difference = square_of_sum(n) - sum_of_squares(n)
+    return difference
+
+def square_of_sum(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i
+    square_of_sum = sum ** 2
+    return square_of_sum
+
+def sum_of_squares(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i ** 2
+    return sum
+
 def smallest_multiple(largest_factor):
     n = 0
     smallest_multiple_found = False
@@ -75,6 +92,9 @@ if __name__ == '__main__':
     print(prime_factors(600851475143))
     print(max(palindrome_product()))
     print(smallest_multiple(10))
-    print(smallest_multiple(20))
+    #print(smallest_multiple(20))
+    print(sum_square_difference(10))
+    print(sum_square_difference(100))
+    
     
     

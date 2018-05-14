@@ -1,9 +1,16 @@
 from math import sqrt
 import decimal
 
-def adjacent_numbers():
+def adjacent_numbers(series_length):
     input_string = multiple_line_input()
-    print(input_string)
+    input_length = len(input_string)
+    products = []
+    for i in range(0, input_length - series_length):
+        product = 1
+        for j in range(0, series_length):
+            product *= int(input_string[i+j])
+        products.append(product)
+    return max(products)
 
 def multiple_line_input():
     lines = []
@@ -13,7 +20,7 @@ def multiple_line_input():
             lines.append(line)
         else:
             break
-    text = '\n'.join(lines)
+    text = ''.join(lines)
     return text
 
 def sieve_of_erathostenes(n):
@@ -127,7 +134,8 @@ if __name__ == '__main__':
     print(sieve_of_erathostenes(100))
     print(sieve_of_erathostenes(100)[5])
     print(sieve_of_erathostenes(200000)[10000])
-    adjacent_numbers()
+    #print(adjacent_numbers(4))
+    #print(adjacent_numbers(13))
     
     
     

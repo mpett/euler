@@ -1,6 +1,21 @@
 from math import sqrt
 import decimal
 
+def adjacent_numbers():
+    input_string = multiple_line_input()
+    print(input_string)
+
+def multiple_line_input():
+    lines = []
+    while True:
+        line = input()
+        if line:
+            lines.append(line)
+        else:
+            break
+    text = '\n'.join(lines)
+    return text
+
 def sieve_of_erathostenes(n):
     A = [None] * n
     for i in range (2, n):
@@ -112,7 +127,7 @@ if __name__ == '__main__':
     print(sieve_of_erathostenes(100))
     print(sieve_of_erathostenes(100)[5])
     print(sieve_of_erathostenes(200000)[10000])
-    print(sieve_of_erathostenes(300000000))
+    adjacent_numbers()
     
     
     

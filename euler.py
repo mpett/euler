@@ -1,6 +1,18 @@
 from math import sqrt
 import decimal
 
+def pythagorean_triplet():
+    special_product = 0
+    for a in range(1, 1000):
+        print(a)
+        for b in range(1, 1000):
+            for c in range(1, 1000):
+                if ((a**2 + b**2) == c**2):
+                    special_sum = a + b + c
+                    if (special_sum == 1000):
+                        special_product = a * b * c
+                        return special_product
+
 def adjacent_numbers(series_length):
     input_string = multiple_line_input()
     input_length = len(input_string)
@@ -136,6 +148,7 @@ if __name__ == '__main__':
     print(sieve_of_erathostenes(200000)[10000])
     #print(adjacent_numbers(4))
     #print(adjacent_numbers(13))
+    print(pythagorean_triplet())
     
     
     

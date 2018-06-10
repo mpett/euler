@@ -1,3 +1,21 @@
+function prime_factors(n) {
+    var prime_factors = new Array();
+    while (n % 2 == 0) {
+        prime_factors.push(2);
+        n /= 2;
+    }
+    var num = 0;
+    for (num = 3; num <= Math.sqrt(n); num += 2) {
+        while (n % num == 0) {
+            prime_factors.push(num);
+            n /= num;
+        }
+    }
+    if (n > 2) {
+        prime_factors.push(n);
+    }
+    return prime_factors;
+}
 function fib(n) {
     var f = new Array(n);
     f[0] = 0;
@@ -31,3 +49,6 @@ console.log(add(2, 2)); // 4
 console.log(multiples(10));
 console.log(multiples(1000));
 console.log(fib(400));
+console.log(prime_factors(100));
+console.log(prime_factors(13195));
+console.log(prime_factors(600851475143));

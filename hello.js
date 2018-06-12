@@ -1,3 +1,15 @@
+function sum_square_difference(n) {
+    var array_of_natural_numbers = new Array(n);
+    for (var num = 1; num <= n; num++) {
+        array_of_natural_numbers[num - 1] = num;
+    }
+    var sum = array_of_natural_numbers.reduce(function(x, y) { return x + y; });
+    var square_of_sum = sum * sum;
+    var sum_of_squares = array_of_natural_numbers.map(function(x) { return x*x; }).reduce(function(x, y) { return x + y; });
+    var sum_square_difference = square_of_sum - sum_of_squares;
+    return sum_square_difference;
+}
+
 function smallest_multiple(n) {
     var upper_limit = n;
     var return_value = -1;
@@ -95,4 +107,6 @@ console.log(prime_factors(13195));
 console.log(prime_factors(600851475143));
 console.log(large_palindromic_number());
 console.log(smallest_multiple(10));
-console.log(smallest_multiple(20));
+//console.log(smallest_multiple(20)); TODO: implement faster version
+console.log(sum_square_difference(10));
+console.log(sum_square_difference(100));

@@ -1,15 +1,17 @@
 function sum_square_difference(n) {
     var array_of_natural_numbers = new Array(n);
-    for (var num = 1; num <= n; num++) {
+    for (var num = 1; num <= n; num++)
         array_of_natural_numbers[num - 1] = num;
-    }
-    var sum = array_of_natural_numbers.reduce(function(x, y) { return x + y; });
+    var sum = array_of_natural_numbers
+                .reduce(function(x, y) { return x + y; });
     var square_of_sum = sum * sum;
-    var sum_of_squares = array_of_natural_numbers.map(function(x) { return x*x; }).reduce(function(x, y) { return x + y; });
-    var sum_square_difference = square_of_sum - sum_of_squares;
+    var sum_of_squares = array_of_natural_numbers
+                            .map(function(x) { return x*x; })
+                                .reduce(function(x, y) { return x + y; });
+    var sum_square_difference = 
+        square_of_sum - sum_of_squares;
     return sum_square_difference;
 }
-
 function smallest_multiple(n) {
     var upper_limit = n;
     var return_value = -1;

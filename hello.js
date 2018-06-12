@@ -1,3 +1,20 @@
+function smallest_multiple(n) {
+    var upper_limit = n;
+    var return_value = -1;
+    var num = 0;
+    while (true) {
+        num++;
+        var sum_of_remainders = 0;
+        for (var divisor = 1; divisor <= upper_limit; divisor++) {
+            sum_of_remainders += (num % divisor);
+        }
+        if (sum_of_remainders == 0) {
+            return_value = num;
+            break;
+        }
+    }
+    return return_value;
+}
 function large_palindromic_number() {
     var i = 0;
     var j = 0;
@@ -77,3 +94,5 @@ console.log(prime_factors(100));
 console.log(prime_factors(13195));
 console.log(prime_factors(600851475143));
 console.log(large_palindromic_number());
+console.log(smallest_multiple(10));
+console.log(smallest_multiple(20));

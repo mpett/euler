@@ -1,6 +1,6 @@
 function sieve_of_erathostenes(n) {
     var A = new Array(n);
-    for (var index = 0; index < n; index++)
+    for (var index = 2; index < n; index++)
         A[index] = true;
     for (var i = 2; i < Math.sqrt(n); i++) {
         if (A[i]) {

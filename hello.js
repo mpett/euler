@@ -1,3 +1,18 @@
+function sieve_of_erathostenes(n) {
+    var A = new Array(n);
+    for (var index = 0; index < n; index++)
+        A[index] = true;
+    for (var i = 2; i < Math.sqrt(n); i++) {
+        if (A[i]) {
+            for (var j = i * i; j < n; j += i) {
+                A[j] = false;
+            }
+        }
+    }
+    A = A.map(function(x, i) { if (x) return i; })
+            .filter(function(x) { if (x) return x; });
+    return A;
+}
 function sum_square_difference(n) {
     var array_of_natural_numbers = new Array(n);
     for (var num = 1; num <= n; num++)
@@ -112,3 +127,4 @@ console.log(smallest_multiple(10));
 //console.log(smallest_multiple(20)); TODO: implement faster version
 console.log(sum_square_difference(10));
 console.log(sum_square_difference(100));
+console.log(sieve_of_erathostenes(100).toString());

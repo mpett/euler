@@ -1,20 +1,7 @@
-function largestProductSeries(n) {
-    var readline = require('readline');
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-        terminal: false
-    });
-    rl.on('line', function(line) {
-        if (line === ".")
-            return -1;
-        console.log(line);
-    });
-}
-function sieve_of_erathostenes(n) {
+function sieveOfErathostenes(n) {
     var A = new Array(n);
-    for (var index = 2; index < n; index++)
-        A[index] = true;
+    for (var i = 2; i < n; i++)
+        A[i] = true;
     for (var i = 2; i < Math.sqrt(n); i++) {
         if (A[i]) {
             for (var j = i * i; j < n; j += i) {
@@ -22,40 +9,41 @@ function sieve_of_erathostenes(n) {
             }
         }
     }
-    A = A.map(function(x, i) { if (x) return i; })
-            .filter(function(x) { if (x) return x; });
-    return A;
+    var B = new Array(n);
+    B = A.map(function (x, i) { if (x)
+        return i; })
+        .filter(function (x) { if (x)
+        return x; });
+    return B;
 }
-function sum_square_difference(n) {
-    var array_of_natural_numbers = new Array(n);
+function sumSquareDifference(n) {
+    var arrayOfNaturalNumbers = new Array(n);
     for (var num = 1; num <= n; num++)
-        array_of_natural_numbers[num - 1] = num;
-    var sum = array_of_natural_numbers
-                .reduce(function(x, y) { return x + y; });
-    var square_of_sum = sum * sum;
-    var sum_of_squares = array_of_natural_numbers
-                            .map(function(x) { return x*x; })
-                                .reduce(function(x, y) { return x + y; });
-    var sum_square_difference = 
-        square_of_sum - sum_of_squares;
-    return sum_square_difference;
+        arrayOfNaturalNumbers[num - 1] = num;
+    var sum = arrayOfNaturalNumbers
+        .reduce(function (x, y) { return x + y; });
+    var squareOfSum = sum * sum;
+    var sumOfSquares = arrayOfNaturalNumbers
+        .map(function (x) { return x * x; })
+        .reduce(function (x, y) { return x + y; });
+    var sumSquareDifference = squareOfSum - sumOfSquares;
+    return sumSquareDifference;
 }
-function smallest_multiple(n) {
-    var upper_limit = n;
-    var return_value = -1;
+function smallestMultiple(n) {
+    var upperLimit = n;
+    var returnValue = -1;
     var num = 0;
     while (true) {
         num++;
-        var sum_of_remainders = 0;
-        for (var divisor = 1; divisor <= upper_limit; divisor++) {
-            sum_of_remainders += (num % divisor);
-        }
-        if (sum_of_remainders == 0) {
-            return_value = num;
+        var sumOfRemainders = 0;
+        for (var divisor = 1; divisor <= upperLimit; divisor++)
+            sumOfRemainders += (num % divisor);
+        if (sumOfRemainders == 0) {
+            returnValue = num;
             break;
         }
     }
-    return return_value;
+    return returnValue;
 }
 function large_palindromic_number() {
     var i = 0;
@@ -94,9 +82,8 @@ function prime_factors(n) {
             n /= num;
         }
     }
-    if (n > 2) {
+    if (n > 2)
         prime_factors.push(n);
-    }
     return prime_factors;
 }
 function fib(n) {
@@ -104,9 +91,8 @@ function fib(n) {
     f[0] = 0;
     f[1] = 1;
     var num = 0;
-    for (num = 2; num < n; num++) {
+    for (num = 2; num < n; num++)
         f[num] = f[num - 1] + f[num - 2];
-    }
     var sum = f.filter(function (x) { return x % 2 == 0; })
         .filter(function (x) { return x <= 4000000; })
         .reduce(function (x, y) { return x + y; });
@@ -136,9 +122,8 @@ console.log(prime_factors(100));
 console.log(prime_factors(13195));
 console.log(prime_factors(600851475143));
 console.log(large_palindromic_number());
-console.log(smallest_multiple(10));
+console.log(smallestMultiple(10));
 //console.log(smallest_multiple(20)); TODO: implement faster version
-console.log(sum_square_difference(10));
-console.log(sum_square_difference(100));
-console.log(sieve_of_erathostenes(16516511)[10000].toString());
-largestProductSeries(10);
+console.log(sumSquareDifference(10));
+console.log(sumSquareDifference(100));
+console.log(sieveOfErathostenes(16516511)[10000].toString());

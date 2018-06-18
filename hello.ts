@@ -1,8 +1,55 @@
+function sieveOfErathostenes(n: number):number[] {
+    var A:boolean[] = new Array(n);
+    for (var i = 2; i < n; i++)
+        A[i] = true;
+    for (var i = 2; i < Math.sqrt(n); i++) {
+        if (A[i]) {
+            for (var j = i * i; j < n; j += i) {
+                A[j] = false;
+            }
+        }
+    }
+    var B:number[] = new Array(n);
+    B = A.map(function(x, i) { if (x) return i; } )
+            .filter(function(x) { if (x) return x; } );
+    return B;
+}
+
+function sumSquareDifference(n: number): number {
+    var arrayOfNaturalNumbers:number[] = new Array(n);
+    for (var num = 1; num <= n; num++)
+        arrayOfNaturalNumbers[num - 1] = num;
+    var sum:number = arrayOfNaturalNumbers
+                        .reduce(function(x,y) { return x + y; });
+    var squareOfSum:number = sum * sum;
+    var sumOfSquares:number = arrayOfNaturalNumbers
+                                .map(function(x) { return x * x; })
+                                    .reduce(function(x,y) { return x + y; } );
+    var sumSquareDifference:number = squareOfSum - sumOfSquares;
+    return sumSquareDifference;
+}
+
+function smallestMultiple(n: number): number {
+    var upperLimit:number = n;
+    var returnValue:number = -1;
+    var num:number = 0;
+    while (true) {
+        num++;
+        var sumOfRemainders:number = 0;
+        for (var divisor = 1; divisor <= upperLimit; divisor++)
+            sumOfRemainders += (num % divisor);
+        if (sumOfRemainders == 0) {
+            returnValue = num;
+            break;
+        }
+    }
+    return returnValue;
+}
+
 function large_palindromic_number(): number {
     var i:number = 0;
     var j:number = 0;
     var palindromes:number[] = new Array();
-    
     for (i = 1; i < 1000; i++) {
         for(j = 1; j < 1000; j++) {
             var product_num = i * j;
@@ -14,9 +61,7 @@ function large_palindromic_number(): number {
             }
         }
     }
-
     var largest_palindromic_product:number = Math.max.apply(Math, palindromes);
-
     return largest_palindromic_product;
 }
 
@@ -29,39 +74,29 @@ function reverse_string(str: string): string {
 
 function prime_factors(n: number): number[] {
     var prime_factors:number[] = new Array();
-    
     while (n % 2 == 0) {
         prime_factors.push(2);
         n /= 2;
     }
-
     var num:number = 0;
-
     for (num = 3; num <= Math.sqrt(n); num += 2) {
         while (n % num == 0) {
             prime_factors.push(num);
             n /= num;
         }
     }
-
-    if (n > 2) {
+    if (n > 2)
         prime_factors.push(n);
-    }
-
     return prime_factors;
 }
-
+                
 function fib(n: number): number {
     var f:number[] = new Array(n);
-    
     f[0] = 0;
     f[1] = 1;
-
     var num:number = 0;
-
-    for (num = 2; num < n; num++) {
+    for (num = 2; num < n; num++)
         f[num] = f[num - 1] + f[num - 2];
-    }
     var sum:number = f.filter(function(x) {return x % 2 == 0})
                         .filter(function(x) {return x <= 4000000})
                             .reduce(function(x,y) {return x + y});
@@ -72,7 +107,6 @@ function fib(n: number): number {
 function multiples(x: number): number {
     var num:number = 0;
     var sum:number = 0;
-
     for (num = 1; num < x; num++) {
         if (num % 3 == 0) {
             sum += num;
@@ -80,7 +114,6 @@ function multiples(x: number): number {
             sum += num;
         }
     }
-
     return sum;
 }
 
@@ -96,3 +129,9 @@ console.log(prime_factors(100));
 console.log(prime_factors(13195));
 console.log(prime_factors(600851475143));
 console.log(large_palindromic_number());
+
+console.log(smallestMultiple(10));
+//console.log(smallest_multiple(20)); TODO: implement faster version
+console.log(sumSquareDifference(10));
+console.log(sumSquareDifference(100));
+console.log(sieveOfErathostenes(16516511)[10000].toString());

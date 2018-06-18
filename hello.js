@@ -1,3 +1,12 @@
+function inputTest() {
+    var stdin = process.openStdin();
+    stdin.addListener("data", function (d) {
+        // note:  d is an object, and when converted to a string it will
+        // end with a linefeed.  so we (rather crudely) account for that  
+        // with toString() and then substring() 
+        console.log("you entered: [" + d.toString().trim() + "]");
+    });
+}
 function sieveOfErathostenes(n) {
     var A = new Array(n);
     for (var i = 2; i < n; i++)
@@ -127,3 +136,4 @@ console.log(smallestMultiple(10));
 console.log(sumSquareDifference(10));
 console.log(sumSquareDifference(100));
 console.log(sieveOfErathostenes(16516511)[10000].toString());
+inputTest();

@@ -3,8 +3,18 @@ exports.__esModule = true;
 var fs = require("fs");
 function largestSeriesInProduct(adj) {
     var inputString = fs.readFileSync('problem_8_input.txt', 'utf8');
-    console.log(inputString);
-    return -1;
+    inputString = inputString.replace(/\D/g, '');
+    var maxAdjacentSum = -1;
+    for (var i = 0; i < inputString.length - adj; i++) {
+        var adjacentNumbers = new Array(adj);
+        for (var j = 0; j < adj; j++)
+            adjacentNumbers.push(parseInt(inputString.charAt(i + j)));
+        var tmp = adjacentNumbers
+            .reduce(function (x, y) { return x * y; });
+        if (tmp > maxAdjacentSum)
+            maxAdjacentSum = tmp;
+    }
+    return maxAdjacentSum;
 }
 function inputTest() {
     var stdin = process.openStdin();
@@ -144,4 +154,5 @@ console.log(sumSquareDifference(10));
 console.log(sumSquareDifference(100));
 console.log(sieveOfErathostenes(16516511)[10000].toString());
 //inputTest();
-largestSeriesInProduct(4);
+console.log(largestSeriesInProduct(4));
+console.log(largestSeriesInProduct(13));

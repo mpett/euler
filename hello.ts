@@ -1,9 +1,22 @@
 import fs = require('fs');
 
 function largestSeriesInProduct(adj: number):number {
-    var inputString:string = fs.readFileSync('problem_8_input.txt','utf8');
-    console.log(inputString);
-    return -1;
+    var inputString:string = 
+        fs.readFileSync('problem_8_input.txt','utf8');
+    inputString = inputString.replace(/\D/g,'');
+    var maxAdjacentSum:number = -1;
+    for (var i = 0; i < inputString.length - adj; i++) {
+        var adjacentNumbers:number[] = new Array(adj);
+        for (var j = 0; j < adj; j++)
+            adjacentNumbers.push(
+                parseInt(inputString.charAt(i + j)));
+        var tmp:number = adjacentNumbers
+                            .reduce(function(x,y) 
+                                { return x * y; } );
+        if (tmp > maxAdjacentSum)
+            maxAdjacentSum = tmp;
+    }
+    return maxAdjacentSum;
 }
 
 function inputTest():void {
@@ -153,4 +166,5 @@ console.log(sumSquareDifference(10));
 console.log(sumSquareDifference(100));
 console.log(sieveOfErathostenes(16516511)[10000].toString());
 //inputTest();
-largestSeriesInProduct(4);
+console.log(largestSeriesInProduct(4));
+console.log(largestSeriesInProduct(13));

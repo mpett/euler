@@ -1,6 +1,22 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
+function pythagoreanTriplet() {
+    var failure = -1;
+    for (var a = 1; a < 1000; a++) {
+        for (var b = 1; b < 1000; b++) {
+            for (var c = 1; c < 1000; c++) {
+                if (a + b + c == 1000) {
+                    if ((a * a) + (b * b) == (c * c)) {
+                        var specialTriplet = a * b * c;
+                        return specialTriplet;
+                    }
+                }
+            }
+        }
+    }
+    return failure;
+}
 function largestSeriesInProduct(adj) {
     var inputString = fs.readFileSync('problem_8_input.txt', 'utf8');
     inputString = inputString.replace(/\D/g, '');
@@ -156,3 +172,4 @@ console.log(sieveOfErathostenes(16516511)[10000].toString());
 //inputTest();
 console.log(largestSeriesInProduct(4));
 console.log(largestSeriesInProduct(13));
+console.log(pythagoreanTriplet());

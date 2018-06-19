@@ -1,11 +1,18 @@
+"use strict";
+exports.__esModule = true;
+var fs = require("fs");
+function largestSeriesInProduct(adj) {
+    var inputString = fs.readFileSync('problem_8_input.txt', 'utf8');
+    console.log(inputString);
+    return -1;
+}
 function inputTest() {
     var stdin = process.openStdin();
     stdin.addListener("data", function (d) {
-        // note:  d is an object, and when converted to a string it will
-        // end with a linefeed.  so we (rather crudely) account for that  
-        // with toString() and then substring() 
         console.log("you entered: [" + d.toString().trim() + "]");
     });
+    var lol = fs.readFileSync('foo.txt', 'utf8');
+    console.log(lol);
 }
 function sieveOfErathostenes(n) {
     var A = new Array(n);
@@ -136,4 +143,5 @@ console.log(smallestMultiple(10));
 console.log(sumSquareDifference(10));
 console.log(sumSquareDifference(100));
 console.log(sieveOfErathostenes(16516511)[10000].toString());
-inputTest();
+//inputTest();
+largestSeriesInProduct(4);

@@ -1,6 +1,14 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
+function summationOfPrimes() {
+    var primeList = sieveOfErathostenes(2500000);
+    var sum = primeList
+        .filter(function (x) { if (x <= 2000000)
+        return x; })
+        .reduce(function (x, y) { return x + y; });
+    return sum;
+}
 function pythagoreanTriplet() {
     var failure = -1;
     for (var a = 1; a < 1000; a++) {
@@ -173,3 +181,4 @@ console.log(sieveOfErathostenes(16516511)[10000].toString());
 console.log(largestSeriesInProduct(4));
 console.log(largestSeriesInProduct(13));
 console.log(pythagoreanTriplet());
+console.log(summationOfPrimes());

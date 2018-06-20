@@ -1,5 +1,13 @@
 import fs = require('fs');
 
+function summationOfPrimes(): number {
+    var primeList:number[] = sieveOfErathostenes(2500000);
+    var sum:number = primeList
+                       .filter(function(x) { if (x <= 2000000) return x; } )
+                          .reduce(function(x,y) { return x + y; } );
+    return sum;
+}
+
 function pythagoreanTriplet():number {
     var failure:number = -1;
     for (var a:number = 1; a < 1000; a++) {
@@ -186,3 +194,4 @@ console.log(sieveOfErathostenes(16516511)[10000].toString());
 console.log(largestSeriesInProduct(4));
 console.log(largestSeriesInProduct(13));
 console.log(pythagoreanTriplet());
+console.log(summationOfPrimes());

@@ -79,6 +79,32 @@ function sumSquareDifference(n) {
     var sumSquareDifference = squareOfSum - sumOfSquares;
     return sumSquareDifference;
 }
+function fasterSmallestMultiple(k) {
+    var n = 1;
+    var i = 0;
+    var check = true;
+    var limit = Math.sqrt(k);
+    var a = new Array(k);
+    var p = new Array(k);
+    p = sieveOfErathostenes(k);
+    for (var num = 0; num < k; num++) {
+        a[num] = 0;
+    }
+    while (p[i] <= k) {
+        a[i] = 1;
+        if (check) {
+            if (p[i] <= limit) {
+                a[i] = Math.floor(Math.log(k) / Math.log(p[i]));
+            }
+            else {
+                check = false;
+            }
+            n = n * Math.pow(p[i], a[i]);
+            i = i + 1;
+        }
+    }
+    return n;
+}
 function smallestMultiple(n) {
     var upperLimit = n;
     var returnValue = -1;
@@ -172,7 +198,9 @@ console.log(prime_factors(100));
 console.log(prime_factors(13195));
 console.log(prime_factors(600851475143));
 console.log(large_palindromic_number());
+console.log("Smallest multiple:");
 console.log(smallestMultiple(10));
+//console.log(fasterSmallestMultiple(10));
 //console.log(smallest_multiple(20)); TODO: implement faster version
 console.log(sumSquareDifference(10));
 console.log(sumSquareDifference(100));

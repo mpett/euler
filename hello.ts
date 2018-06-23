@@ -96,16 +96,17 @@ function fasterSmallestMultiple(k: number): number {
         a[num] = 0;
     }
     while (p[i] <= k) {
+        console.log(p[i] + " " + k);
         a[i] = 1;
         if (check) {
             if (p[i] <= limit) {
                 a[i] = Math.floor(Math.log(k) / Math.log(p[i]));
             } else {
                 check = false;
-            }
-            n = n * Math.pow(p[i], a[i]);
-            i = i+1;
+            }    
         }
+        n = n * Math.pow(p[i], a[i]);
+        i = i+1;
     }
     return n;
 }
@@ -213,7 +214,7 @@ console.log(prime_factors(600851475143));
 console.log(large_palindromic_number());
 console.log("Smallest multiple:")
 console.log(smallestMultiple(10));
-//console.log(fasterSmallestMultiple(10));
+console.log(fasterSmallestMultiple(10));
 //console.log(smallest_multiple(20)); TODO: implement faster version
 console.log(sumSquareDifference(10));
 console.log(sumSquareDifference(100));

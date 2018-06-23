@@ -87,19 +87,15 @@ function fasterSmallestMultiple(k) {
     var a = new Array(k);
     var p = new Array(k);
     p = sieveOfErathostenes(k);
-    for (var num = 0; num < k; num++) {
+    for (var num = 0; num < k; num++)
         a[num] = 0;
-    }
     while (p[i] <= k) {
-        console.log(p[i] + " " + k);
         a[i] = 1;
         if (check) {
-            if (p[i] <= limit) {
+            if (p[i] <= limit)
                 a[i] = Math.floor(Math.log(k) / Math.log(p[i]));
-            }
-            else {
+            else
                 check = false;
-            }
         }
         n = n * Math.pow(p[i], a[i]);
         i = i + 1;
@@ -199,14 +195,12 @@ console.log(prime_factors(100));
 console.log(prime_factors(13195));
 console.log(prime_factors(600851475143));
 console.log(large_palindromic_number());
-console.log("Smallest multiple:");
 console.log(smallestMultiple(10));
 console.log(fasterSmallestMultiple(10));
-//console.log(smallest_multiple(20)); TODO: implement faster version
+console.log(fasterSmallestMultiple(20));
 console.log(sumSquareDifference(10));
 console.log(sumSquareDifference(100));
 console.log(sieveOfErathostenes(16516511)[10000].toString());
-//inputTest();
 console.log(largestSeriesInProduct(4));
 console.log(largestSeriesInProduct(13));
 console.log(pythagoreanTriplet());

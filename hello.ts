@@ -1,5 +1,31 @@
 import fs = require('fs');
 
+function firstTriangularNumberWithOverKDivisors(n:number, k:number): number {
+    var triangulars:number[] = triangularNumbers(n);
+    var returnValue:number = -1;
+    var maxDivisors:number = 0;
+    for (var i:number = 0; i < n; i++) {
+        var triangularNumber:number = triangulars[i];
+        var numDivisors:number = numberOfDivisors(triangularNumber);
+        var tmp:number = numDivisors;
+        if (tmp > maxDivisors) {
+            maxDivisors = tmp;
+            console.log(maxDivisors);
+        }
+        if (numDivisors > k) {
+            returnValue = triangularNumber;
+            break;
+        }
+    }
+    return returnValue;
+}
+
+function numberOfDivisors(n:number): number {
+    var listOfFactors:number[] = factors(n);
+    var numberOfDivisors:number = listOfFactors.length;
+    return numberOfDivisors;
+}
+
 function factors(n:number): number[] {
     var factors:number[] = new Array();
     for (var i:number = 1; i <= (n/2); i++) {
@@ -247,5 +273,8 @@ console.log(largestSeriesInProduct(4));
 console.log(largestSeriesInProduct(13));
 console.log(pythagoreanTriplet());
 console.log(summationOfPrimes());
+
 console.log(triangularNumbers(10));
 console.log(factors(28));
+console.log(firstTriangularNumberWithOverKDivisors(100,5));
+console.log(firstTriangularNumberWithOverKDivisors(100000,500));

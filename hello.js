@@ -1,6 +1,16 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
+function triangularNumbers(n) {
+    var listOfTriangularNumbers = new Array(n);
+    for (var i = 1; i <= n; i++) {
+        var triangularNumber = 0;
+        for (var j = 1; j <= i; j++)
+            triangularNumber += j;
+        listOfTriangularNumbers[i - 1] = triangularNumber;
+    }
+    return listOfTriangularNumbers;
+}
 function summationOfPrimes() {
     var primeList = sieveOfErathostenes(2500000);
     var sum = primeList
@@ -205,3 +215,4 @@ console.log(largestSeriesInProduct(4));
 console.log(largestSeriesInProduct(13));
 console.log(pythagoreanTriplet());
 console.log(summationOfPrimes());
+console.log(triangularNumbers(10));

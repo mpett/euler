@@ -1,5 +1,16 @@
 import fs = require('fs');
 
+function triangularNumbers(n:number): number[] {
+    var listOfTriangularNumbers:number[] = new Array(n);
+    for (var i:number = 1; i <= n; i++) {
+        var triangularNumber:number = 0;
+        for (var j:number = 1; j <= i; j++)
+            triangularNumber += j;
+        listOfTriangularNumbers[i - 1] = triangularNumber;
+    }
+    return listOfTriangularNumbers;
+}
+
 function summationOfPrimes(): number {
     var primeList:number[] = sieveOfErathostenes(2500000);
     var sum:number = primeList
@@ -226,3 +237,4 @@ console.log(largestSeriesInProduct(4));
 console.log(largestSeriesInProduct(13));
 console.log(pythagoreanTriplet());
 console.log(summationOfPrimes());
+console.log(triangularNumbers(10));

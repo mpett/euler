@@ -1,6 +1,15 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
+function factors(n) {
+    var factors = new Array();
+    for (var i = 1; i <= (n / 2); i++) {
+        if (n % i == 0)
+            factors.push(i);
+    }
+    factors.push(n);
+    return factors;
+}
 function triangularNumbers(n) {
     var listOfTriangularNumbers = new Array(n);
     for (var i = 1; i <= n; i++) {
@@ -216,3 +225,4 @@ console.log(largestSeriesInProduct(13));
 console.log(pythagoreanTriplet());
 console.log(summationOfPrimes());
 console.log(triangularNumbers(10));
+console.log(factors(28));

@@ -1,6 +1,37 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
+function fasterTriangNumber(p, k) {
+    var t = 1;
+    var a = 1;
+    var cnt = 0;
+    var tt = 0;
+    var i = 0;
+    var exponent = 0;
+    var primeArray = sieveOfErathostenes(p);
+    while (cnt <= k) {
+        cnt = 1;
+        a = a + 1;
+        t = t + a;
+        tt = t;
+        for (i = 0; i < p; i++) {
+            if (primeArray[i] * primeArray[i] > tt) {
+                cnt = 2 * cnt;
+                break;
+            }
+            exponent = 1;
+            while (tt % primeArray[i] == 0) {
+                exponent++;
+                tt = tt / primeArray[i];
+            }
+            if (exponent > 1)
+                cnt = cnt * exponent;
+            if (tt == 1)
+                break;
+        }
+    }
+    return t;
+}
 function firstTriangularNumberWithOverKDivisors(n, k) {
     var triangulars = triangularNumbers(n);
     var returnValue = -1;
@@ -251,4 +282,6 @@ console.log(summationOfPrimes());
 console.log(triangularNumbers(10));
 console.log(factors(28));
 console.log(firstTriangularNumberWithOverKDivisors(100, 5));
-console.log(firstTriangularNumberWithOverKDivisors(100000, 500));
+//console.log(firstTriangularNumberWithOverKDivisors(100000,500));
+console.log(fasterTriangNumber(100, 5));
+console.log(fasterTriangNumber(2000, 500));

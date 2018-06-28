@@ -1,6 +1,20 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
+function largeSum() {
+    var inputString = fs.readFileSync("problem_11_input.txt", "utf8");
+    var lineArray = inputString.split("\n");
+    var finalSum = 0;
+    lineArray.forEach(function (element) {
+        var numberFromLine = parseInt(element);
+        if (isNaN(numberFromLine))
+            return;
+        finalSum += numberFromLine;
+    });
+    var finalSumString = finalSum.toString();
+    finalSumString.substr(10);
+    return finalSumString;
+}
 function fasterTriangNumber(p, k) {
     var t = 1;
     var a = 1;
@@ -45,7 +59,8 @@ function firstTriangularNumberWithOverKDivisors(n, k) {
             console.log(maxDivisors);
         }
         if (numDivisors > k) {
-            returnValue = triangularNumber;
+            returnValue
+                = triangularNumber;
             break;
         }
     }
@@ -285,3 +300,5 @@ console.log(firstTriangularNumberWithOverKDivisors(100, 5));
 //console.log(firstTriangularNumberWithOverKDivisors(100000,500));
 console.log(fasterTriangNumber(100, 5));
 console.log(fasterTriangNumber(2000, 500));
+console.log(fasterTriangNumber(20000, 1000));
+console.log(largeSum());

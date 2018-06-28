@@ -1,5 +1,20 @@
 import fs = require('fs');
 
+function largeSum():string {
+    var inputString:string = fs.readFileSync("problem_11_input.txt", "utf8");
+    var lineArray:string[] = inputString.split("\n");
+    var finalSum:number = 0;
+    lineArray.forEach(function(element) {
+        var numberFromLine:number = parseInt(element);
+        if (isNaN(numberFromLine))
+            return;
+        finalSum += numberFromLine;
+    });
+    var finalSumString:string = finalSum.toString();
+    finalSumString.substr(10);
+    return finalSumString;
+}
+
 function fasterTriangNumber(p:number, k:number): number {
     var t:number = 1;
     var a:number = 1;
@@ -41,14 +56,16 @@ function firstTriangularNumberWithOverKDivisors(n:number, k:number): number {
     var maxDivisors:number = 0;
     for (var i:number = 0; i < n; i++) {
         var triangularNumber:number = triangulars[i];
-        var numDivisors:number = numberOfDivisors(triangularNumber);
+        var numDivisors:number 
+            = numberOfDivisors(triangularNumber);
         var tmp:number = numDivisors;
         if (tmp > maxDivisors) {
             maxDivisors = tmp;
             console.log(maxDivisors);
         }
         if (numDivisors > k) {
-            returnValue = triangularNumber;
+            returnValue 
+                = triangularNumber;
             break;
         }
     }
@@ -315,3 +332,6 @@ console.log(firstTriangularNumberWithOverKDivisors(100,5));
 //console.log(firstTriangularNumberWithOverKDivisors(100000,500));
 console.log(fasterTriangNumber(100,5));
 console.log(fasterTriangNumber(2000, 500));
+console.log(fasterTriangNumber(20000, 1000));
+
+console.log(largeSum());

@@ -1,6 +1,17 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
+var bigInt = require("big-integer");
+function powerDigitSum(n) {
+    var powerString = bigInt(2).pow(n).toString();
+    console.log(powerString);
+    var digitSum = 0;
+    for (var i = 0; i < powerString.length; i++) {
+        var digit = parseInt(powerString.charAt(i));
+        digitSum += digit;
+    }
+    return digitSum;
+}
 function longestCollatzSequence(n) {
     var max = 0;
     var maxStartNumber = n;
@@ -334,4 +345,5 @@ console.log(largeSum());
 console.log(collatzSequence(13));
 console.log(longestCollatzSequence(15));
 console.log(longestCollatzSequence(1000));
-console.log(longestCollatzSequence(1000000));
+console.log(powerDigitSum(15));
+console.log(powerDigitSum(1000));

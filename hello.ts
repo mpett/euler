@@ -1,5 +1,37 @@
 import fs = require('fs');
 
+function longestCollatzSequence(n:number):number {
+    var max:number = 0;
+    var maxStartNumber:number = n;
+
+    for (var i:number = 2; i < n; i++) {
+        var length:number = collatzSequence(i).length;
+        if (length > max) {
+            max = length;
+            maxStartNumber = i;
+        }
+    }
+
+    return maxStartNumber;
+}
+
+function collatzSequence(n:number):number[] {
+    var collatzSequence:number[] = new Array();
+    collatzSequence.push(n);
+    while (true) {
+        if (n == 1) {
+            break;
+        } else if (n % 2 == 0) {
+            n = n / 2;
+            collatzSequence.push(n);
+        } else {
+            n = 3 * n + 1;
+            collatzSequence.push(n);
+        }
+    }
+    return collatzSequence;
+}
+
 function largeSum():string {
     var inputString:string = fs.readFileSync("problem_11_input.txt", "utf8");
     var lineArray:string[] = inputString.split("\n");
@@ -11,7 +43,6 @@ function largeSum():string {
         finalSum += numberFromLine;
     });
     var finalSumString:string = finalSum.toString();
-    finalSumString.substr(10);
     return finalSumString;
 }
 
@@ -335,3 +366,7 @@ console.log(fasterTriangNumber(2000, 500));
 console.log(fasterTriangNumber(20000, 1000));
 
 console.log(largeSum());
+console.log(collatzSequence(13));
+console.log(longestCollatzSequence(15));
+console.log(longestCollatzSequence(1000));
+console.log(longestCollatzSequence(1000000));

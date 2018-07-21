@@ -1,12 +1,13 @@
 import fs = require('fs');
 import bigInt = require('big-integer');
 
-function largestGridProduct():void {
+function largestGridProduct():number {
     var inputString:string = fs.readFileSync("number_grid.txt", "utf8");
     console.log(inputString);
     var lineArray:string[] = inputString.split("\n");
     var i:number = 0;
     var numberGrid:any[] = new Array();
+    
     lineArray.forEach(function(element) {
         var numberArray:string[] = element.split(" ");
         var j:number = 0;
@@ -20,9 +21,46 @@ function largestGridProduct():void {
         });
         i++;
     });
+    
     numberGrid.pop();
-    console.log(numberGrid);
-    console.log(numberGrid[4][3]);
+    var sum:number = 0;
+    var n:number = numberGrid.length;
+    var products:number[] = new Array();
+
+    for (var i:number = 0; i < n; i++) {
+        for (var j:number = 0; j < n; j++) {
+            if (j + 3 < n) {
+                var product:number = numberGrid[i][j] 
+                * numberGrid[i][j+1] * numberGrid[i][j+2] 
+                * numberGrid[i][j+3];
+                products.push(product);
+            }
+            if (i + 3 < n) {
+                var product:number = numberGrid[i][j] 
+                * numberGrid[i+1][j] * numberGrid[i+2][j] 
+                * numberGrid[i+3][j];
+                sum += product;
+                products.push(product);
+            }            
+            if (i + 3 < n && j + 3 < n) {
+                var product:number = numberGrid[i][j] 
+                * numberGrid[i+1][j+1] * numberGrid[i+2][j+2] 
+                * numberGrid[i+3][j+3];
+                sum += product;
+                products.push(product);
+            }        
+            if (i + 3 < n && j - 3 >= 0) {
+                var product:number = numberGrid[i][j] 
+                * numberGrid[i+1][j-1] * numberGrid[i+2][j-2] 
+                * numberGrid[i+3][j-3];
+                sum += product;
+                products.push(product);
+            }            
+        }
+    }
+
+    var greatestProduct:number = Math.max.apply(null, products);
+    return greatestProduct;
 }
 
 function factorialDigitSum(n:number):number {
@@ -423,4 +461,4 @@ console.log(powerDigitSum(15));
 console.log(powerDigitSum(1000));
 console.log(factorialDigitSum(10));
 console.log(factorialDigitSum(100));
-largestGridProduct();
+console.log(largestGridProduct());

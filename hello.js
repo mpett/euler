@@ -22,8 +22,42 @@ function largestGridProduct() {
         i++;
     });
     numberGrid.pop();
-    console.log(numberGrid);
-    console.log(numberGrid[4][3]);
+    var sum = 0;
+    var n = numberGrid.length;
+    var products = new Array();
+    for (var i = 0; i < n; i++) {
+        for (var j = 0; j < n; j++) {
+            if (j + 3 < n) {
+                var product = numberGrid[i][j]
+                    * numberGrid[i][j + 1] * numberGrid[i][j + 2]
+                    * numberGrid[i][j + 3];
+                products.push(product);
+            }
+            if (i + 3 < n) {
+                var product = numberGrid[i][j]
+                    * numberGrid[i + 1][j] * numberGrid[i + 2][j]
+                    * numberGrid[i + 3][j];
+                sum += product;
+                products.push(product);
+            }
+            if (i + 3 < n && j + 3 < n) {
+                var product = numberGrid[i][j]
+                    * numberGrid[i + 1][j + 1] * numberGrid[i + 2][j + 2]
+                    * numberGrid[i + 3][j + 3];
+                sum += product;
+                products.push(product);
+            }
+            if (i + 3 < n && j - 3 >= 0) {
+                var product = numberGrid[i][j]
+                    * numberGrid[i + 1][j - 1] * numberGrid[i + 2][j - 2]
+                    * numberGrid[i + 3][j - 3];
+                sum += product;
+                products.push(product);
+            }
+        }
+    }
+    var greatestProduct = Math.max.apply(null, products);
+    return greatestProduct;
 }
 function factorialDigitSum(n) {
     var bn = bigInt(n);
@@ -385,4 +419,4 @@ console.log(powerDigitSum(15));
 console.log(powerDigitSum(1000));
 console.log(factorialDigitSum(10));
 console.log(factorialDigitSum(100));
-largestGridProduct();
+console.log(largestGridProduct());

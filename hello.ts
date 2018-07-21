@@ -1,6 +1,44 @@
 import fs = require('fs');
 import bigInt = require('big-integer');
 
+function largestGridProduct():void {
+    var inputString:string = fs.readFileSync("number_grid.txt", "utf8");
+    console.log(inputString);
+    var lineArray:string[] = inputString.split("\n");
+    var i:number = 0;
+    var numberGrid:any[] = new Array();
+    lineArray.forEach(function(element) {
+        var numberArray:string[] = element.split(" ");
+        var j:number = 0;
+        numberArray.forEach(function(num) {
+            var parsedNum:number = parseInt(num);
+            if (!numberGrid[i]) {
+                numberGrid[i] = [];
+            }
+            numberGrid[i][j] = parsedNum;
+            j++;
+        });
+        i++;
+    });
+    numberGrid.pop();
+    console.log(numberGrid);
+    console.log(numberGrid[4][3]);
+}
+
+function factorialDigitSum(n:number):number {
+    var bn = bigInt(n);
+    for (var i:number = 1; i <= n; i++) {
+        var bi = bigInt(i);
+        bn = bn.multiply(bi);
+    }
+    var factorialString:string = bn.toString();
+    var digitSum:number = 0;
+    for (var i:number = 0; i < factorialString.length; i++) {
+        digitSum += parseInt(factorialString.charAt(i));
+    }
+    return digitSum;
+}
+
 function powerDigitSum(n:number):number {
     var powerString:string = bigInt(2).pow(n).toString();
     console.log(powerString);
@@ -383,3 +421,6 @@ console.log(longestCollatzSequence(15));
 console.log(longestCollatzSequence(1000));
 console.log(powerDigitSum(15));
 console.log(powerDigitSum(1000));
+console.log(factorialDigitSum(10));
+console.log(factorialDigitSum(100));
+largestGridProduct();
